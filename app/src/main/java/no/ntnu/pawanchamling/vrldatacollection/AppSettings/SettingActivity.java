@@ -5,15 +5,48 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import no.ntnu.pawanchamling.vrldatacollection.R;
+import no.ntnu.pawanchamling.vrldatacollection.model.Settings;
 
 public class SettingActivity extends ActionBarActivity {
+
+    private Settings settings;
+
+    private Switch switchGPSSetting;
+    private Switch switchNoiseDataSetting;
+    private Switch switchOrdinalDataSetting;
+
+    private EditText editTextGPSInterval;
+    private EditText editTextNoiseDataInterval;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+        Bundle id = getIntent().getExtras();
+        settings = (Settings)id.getSerializable("settings");
+
+        switchGPSSetting = (Switch) findViewById(R.id.switch_gpsSetting);
+        switchNoiseDataSetting = (Switch) findViewById(R.id.switch_noiseSensor_setting);
+        switchOrdinalDataSetting = (Switch) findViewById(R.id.switch_ordinalData_setting);
+
+        editTextGPSInterval = (EditText) findViewById(R.id.editText_gps_interval);
+        editTextNoiseDataInterval = (EditText) findViewById(R.id.editText_noiseSensor_interval);
+
+        //###Set the setting components based on the 'settings'
+        switchGPSSetting.setChecked(settings.isGPSsensorOn());
+        switchNoiseDataSetting.setChecked(settings.isNoiseSensorOn());
+        switchOrdinalDataSetting.setChecked(settings.isOrdinalDataOn());
+
+        editTextGPSInterval.setText("" + settings.getGPSdataScheduleTime(), TextView.BufferType.EDITABLE);
+        editTextNoiseDataInterval.setText("" + settings.getNoiseDataScheduleTime(), TextView.BufferType.EDITABLE);
+
+
     }
 
 

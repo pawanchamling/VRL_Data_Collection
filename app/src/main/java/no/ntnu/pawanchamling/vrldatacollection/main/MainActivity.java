@@ -55,7 +55,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void startAppSettingActivity(View v) {
 
-        System.out.println("###MainActivity: Starting App Setting Activity");
+        //System.out.println("###MainActivity: Starting App Setting Activity");
 
         Intent appSettingIntent = new Intent(MainActivity.this, SettingActivity.class);
         Bundle bundle = new Bundle();
