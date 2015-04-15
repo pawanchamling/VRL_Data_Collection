@@ -7,11 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import no.ntnu.pawanchamling.vrldatacollection.AppSettings.SettingActivity;
 import no.ntnu.pawanchamling.vrldatacollection.R;
+import no.ntnu.pawanchamling.vrldatacollection.model.Settings;
 import no.ntnu.pawanchamling.vrldatacollection.session.SessionActivity;
 import no.ntnu.pawanchamling.vrldatacollection.session.service.GPSRecordService;
 import no.ntnu.pawanchamling.vrldatacollection.session.service.SoundRecordService;
@@ -52,6 +53,17 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+    public void startAppSettingActivity(View v) {
+
+        System.out.println("###MainActivity: Starting App Setting Activity");
+
+        Intent appSettingIntent = new Intent(MainActivity.this, SettingActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("settings", settings );
+        appSettingIntent.putExtras(bundle);
+
+        startActivity(appSettingIntent);
+    }
 
     protected void onResume(){
         super.onResume();

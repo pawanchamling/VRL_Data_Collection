@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import no.ntnu.pawanchamling.vrldatacollection.main.Settings;
+import no.ntnu.pawanchamling.vrldatacollection.model.Settings;
 import no.ntnu.pawanchamling.vrldatacollection.session.sensor.GPSListener;
 import no.ntnu.pawanchamling.vrldatacollection.session.sensor.SoundMeter;
 

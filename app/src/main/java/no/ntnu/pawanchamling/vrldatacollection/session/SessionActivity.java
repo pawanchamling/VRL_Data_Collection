@@ -11,8 +11,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import no.ntnu.pawanchamling.vrldatacollection.R;
-import no.ntnu.pawanchamling.vrldatacollection.main.Settings;
-import no.ntnu.pawanchamling.vrldatacollection.session.service.SoundRecordService;
+import no.ntnu.pawanchamling.vrldatacollection.model.Settings;
 
 
 public class SessionActivity extends ActionBarActivity implements SessionView {
@@ -73,7 +72,7 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
 
     public void startEnterANoteDialog(){
         //start the "Enter a note dialog activity"
-        Intent intent = new Intent(SessionActivity.this, EnterANoteDialog.class);
+        Intent intent = new Intent(SessionActivity.this, EnterANoteDialogActivity.class);
         startActivityForResult(intent, REQUEST_CODE);
     }
 

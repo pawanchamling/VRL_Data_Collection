@@ -15,7 +15,7 @@ import java.util.Date;
 import no.ntnu.pawanchamling.vrldatacollection.R;
 
 
-public class EnterANoteDialog extends ActionBarActivity implements NoteDialogView {
+public class EnterANoteDialogActivity extends ActionBarActivity implements NoteDialogView {
 
     private DialogPresenter dialogPresenter;
 
@@ -67,7 +67,7 @@ public class EnterANoteDialog extends ActionBarActivity implements NoteDialogVie
 
 
     public void cancelDialog(View v) {
-        EnterANoteDialog.this.finish();
+        EnterANoteDialogActivity.this.finish();
     }
 
     public void saveText(View v) {
@@ -86,7 +86,7 @@ public class EnterANoteDialog extends ActionBarActivity implements NoteDialogVie
         setResult(RESULT_OK, data);
         finish();
 
-       // EnterANoteDialog.this.finish();
+       // EnterANoteDialogActivity.this.finish();
     }
 
 

@@ -1,4 +1,4 @@
-package no.ntnu.pawanchamling.vrldatacollection.main;
+package no.ntnu.pawanchamling.vrldatacollection.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
