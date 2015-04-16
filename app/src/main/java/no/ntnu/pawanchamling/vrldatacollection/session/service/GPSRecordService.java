@@ -188,7 +188,7 @@ public class GPSRecordService extends Service {
                 public void run() {
 
                     // display toast
-                    Toast.makeText(getApplicationContext(), getDateTime(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), getDateTime(), Toast.LENGTH_SHORT).show();
 
                     Log.i("!!!GPSRecordService", "5 Seconds gone");
 

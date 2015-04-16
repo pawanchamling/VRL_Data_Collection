@@ -66,8 +66,14 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
         ordinalValueScroller = (ScrollView) findViewById(R.id.scroller_ordinalButtons);
         ordinalValuesContainer = (FlowLayout) findViewById(R.id.layout_ordinalButtonsContainer);
 
+        String simplerTimeStamp = settings.getFileTimeStamp();
+        String timeString = simplerTimeStamp.substring(11, simplerTimeStamp.length());
+        Log.i("###SessionActivity", "timeString: "+ timeString);
+        simplerTimeStamp = simplerTimeStamp.substring(0, 10);
+        timeString = timeString.substring(0, 2) + ":" + timeString.substring(2,4) + ":" + timeString.substring(4,timeString.length());
+        simplerTimeStamp = simplerTimeStamp + " " + timeString;
 
-        userActionsMessages.append("Session Started at [" + settings.getFileTimeStamp() + "] \n");
+        userActionsMessages.append("Session Started at [ " + simplerTimeStamp + " ] \n");
 
         if(settings.isOrdinalDataOn()) {
             loadOrdinalButtons();

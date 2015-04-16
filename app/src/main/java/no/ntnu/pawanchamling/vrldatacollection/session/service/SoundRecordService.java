@@ -194,7 +194,7 @@ public class SoundRecordService extends Service {
                 public void run() {
 
                     // display toast
-                    Toast.makeText(getApplicationContext(), getDateTime(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getApplicationContext(), getDateTime(), Toast.LENGTH_SHORT).show();
 
                     Log.i("!!!SoundRecordService", "3 Seconds gone");
                     double amp = mSoundSensor.getAmplitude();
