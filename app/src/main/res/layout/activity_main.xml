@@ -32,6 +32,7 @@
                     android:onClick="startActivitySession"
                     android:text="@string/txt_start_session"
                     android:layout_column="11"
+                    android:background="#66c7ec"
                     android:layout_marginBottom="32dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true" />
@@ -54,6 +55,7 @@
                     android:layout_height="50dp"
                     android:onClick="startAppSettingActivity"
                     android:text="@string/txt_settings"
+                    android:background="#66c7ec"
                     android:layout_column="11"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"

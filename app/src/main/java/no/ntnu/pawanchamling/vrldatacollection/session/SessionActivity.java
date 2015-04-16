@@ -8,10 +8,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import no.ntnu.pawanchamling.vrldatacollection.R;
+import no.ntnu.pawanchamling.vrldatacollection.helper.FlowLayout;
 import no.ntnu.pawanchamling.vrldatacollection.model.Settings;
 
 
@@ -19,8 +25,11 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
 
     private SessionPresenter presenter;
     private static final int REQUEST_CODE = 1; //Get note from EnterANoteDialogActivity
+
     private TextView userActionsMessages;
     private ScrollView userNotes_scroller;
+    private ScrollView ordinalValueScroller;
+    private FlowLayout ordinalValuesContainer;
 
    // private String theMainTimeStamp;
     private boolean isSessionActive = false;
@@ -48,15 +57,70 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
 
         presenter = new SessionPresenter(this, settings.getFileTimeStamp());
 
-        userActionsMessages = (TextView) findViewById(R.id.textView_user_notes);
-        userNotes_scroller = (ScrollView)findViewById(R.id.userNotes_scroller);
+        userActionsMessages = (TextView) findViewById(R.id.textView_userNotes);
+        userNotes_scroller = (ScrollView)findViewById(R.id.scroller_userNotes);
         userActionsMessages.setMovementMethod(new ScrollingMovementMethod());
-        //userNotes_scroller.addView(userActionsMessages);
 
-        //startSensorService();
+        ordinalValueScroller = (ScrollView) findViewById(R.id.scroller_ordinalButtons);
+        ordinalValuesContainer = (FlowLayout) findViewById(R.id.layout_ordinalButtonsContainer);
+
+
+        loadOrdinalButtons();
 
     }
 
+
+    private void loadOrdinalButtons(){
+        ArrayList<String> ordinalValues = settings.getOrdinalValues();
+
+        Log.i("###OrdinalValuesActivity", "No. of Ordinal values : " + settings.getNoOfOridnalValues());
+        for(int i = 0; i < ordinalValues.size(); i++) {
+            String text = ordinalValues.get(i);
+            String name = text;
+            if(name.length() > 15) {
+                name = text.substring(0, 12) + "...";
+            }
+            createButton(i, name, text);
+
+        }
+
+    }
+
+    private void createButton(int index, String name, String text){
+
+        Log.i("###OrdinalValuesActivity", "Adding a button with name " + name);
+        Button ordinalValueButton = new Button(this);
+        ordinalValueButton.setText(name);
+        ordinalValueButton.setId(index);
+
+
+//        FlowLayout.LayoutParams lp =   new FlowLayout.LayoutParams(
+//                120, 50);
+//        ordinalValueButton.setLayoutParams(lp);
+
+        ordinalValueButton.setWidth(450);
+        ordinalValueButton.setHeight(100);
+
+        ordinalValueButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //delete the textView that the button is contained
+//                int index = v.getId();
+//                TableRow tr = (TableRow) findViewById(1000 + index);
+//                ViewGroup parentView = (ViewGroup) v.getParent().getParent();
+//                parentView.removeView(tr);
+//                //--noOfOrdinalValues;
+//                addedOrdinalValues.remove(index);
+
+//                Log.i("###OrdinalValuesActivity", "A TableRow with Id = " + 1000 + index + " Deleted");
+                Log.i("###OrdinalValuesActivity", "Ordinal Button with text : ");
+            }
+        });
+
+        ordinalValuesContainer.addView(ordinalValueButton);
+
+    }
 
 
     //#####################################################
@@ -81,8 +145,6 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
     public void onClickStopSession(View v){
         presenter.stopSession();
 
-        //Stopping the service
-       // stopSensorService();
 
         this.finish();
     }

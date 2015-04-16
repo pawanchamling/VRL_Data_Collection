@@ -3,6 +3,7 @@ package no.ntnu.pawanchamling.vrldatacollection.AppSettings;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -114,15 +115,15 @@ public class OrdinalValuesActivity extends ActionBarActivity {
                 //--noOfOrdinalValues;
                 addedOrdinalValues.remove(index);
 
-                System.out.println("###OrdinalValuesActivity: A TableRow with Id = " + 1000 + index + " Deleted");
-                System.out.println("###OrdinalValuesActivity: Current Ordinal Value Index = " + addedOrdinalValueIndex);
+                Log.i("###OrdinalValuesActivity", "A TableRow with Id = " + 1000 + index + " Deleted");
+                Log.i("###OrdinalValuesActivity", "Current Ordinal Value Index = " + addedOrdinalValueIndex);
             }
         });
 
         //adding the textview and the deletebutton to the TableRow
         tableRow.addView(editTextOrdinalValue);
         tableRow.addView(deleteButton);
-        System.out.println("###OrdinalValuesActivity: A TableRow with Id = " + 1000 + index + " Added");
+        Log.i("###OrdinalValuesActivity", "A TableRow with Id = " + 1000 + index + " Added");
 
         addedOrdinalValues.put(index, index);
 
@@ -134,12 +135,12 @@ public class OrdinalValuesActivity extends ActionBarActivity {
     public void addOrdinalValue(View v) {
         addTableRowAndValues(++addedOrdinalValueIndex , "");
         ++noOfOrdinalValues;
-        System.out.println("###OrdinalValuesActivity: Current Ordinal Value Index = " + addedOrdinalValueIndex);
+        Log.i("###OrdinalValuesActivity", "Current Ordinal Value Index = " + addedOrdinalValueIndex);
     }
 
     public void saveOrdinalValues(View v) {
 
-        System.out.println("###OrdinalValuesActivity: No.Of extra Ordinal Values = " + addedOrdinalValues.size());
+        Log.i("###OrdinalValuesActivity", "No.Of extra Ordinal Values = " + addedOrdinalValues.size());
         // addedOrdinalValues.keySet()
         ArrayList<String> ordinalValues = new ArrayList<String>();
 
@@ -151,7 +152,7 @@ public class OrdinalValuesActivity extends ActionBarActivity {
             EditText et = (EditText) findViewById(2000 + key);
             ordinalValues.add(et.getText().toString());
 
-            System.out.println("###OrdinalValuesActivity: value : " + et.getText().toString());
+            Log.i("###OrdinalValuesActivity", "value : " + et.getText().toString());
         }
 
         settings.setOrdinalValues(ordinalValues);

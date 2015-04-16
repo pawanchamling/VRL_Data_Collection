@@ -40,7 +40,7 @@ public class SessionPresenter {
         this.nominalData.addValue(timeStamp, note);
     }
 
-    public void stopSession(){
+    public void stopSession() {
 
         ArrayList<String> data = this.nominalData.getNominalData();
         ArrayList<String> timeStampData = this.nominalData.getTimeStampData();

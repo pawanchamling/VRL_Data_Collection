@@ -206,8 +206,10 @@
                     android:layout_height="wrap_content"
                     android:text="Set Ordinal Values"
                     android:id="@+id/button"
+                    android:background="#66c7ec"
                     android:onClick="startOrdinalValuesActivity"
-                    android:layout_weight="0.5" />
+                    android:layout_weight="0.5"
+                    android:textSize="22px" />
 
             </TableRow>
 
@@ -227,7 +229,7 @@
 
             <Button
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:text="Save Setting"
                 android:id="@+id/button2"
@@ -235,21 +237,23 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:background="#66c7ec"
                 android:layout_marginLeft="58dp"
                 android:layout_marginStart="58dp" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:text="Cancel"
                 android:id="@+id/button3"
                 android:onClick="cancelSetting"
+                android:background="#66c7ec"
+                android:layout_marginLeft="55dp"
+                android:layout_marginStart="55dp"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/button2"
-                android:layout_toEndOf="@+id/button2"
-                android:layout_marginLeft="37dp"
-                android:layout_marginStart="37dp" />
+                android:layout_toEndOf="@+id/button2" />
         </RelativeLayout>
     </LinearLayout>
 

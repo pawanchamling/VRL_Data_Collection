@@ -34,6 +34,23 @@ public class Settings implements Serializable{
         ordinalValues.add("Low");
 
 
+        this.isGPSsensorOn = false;
+        this.GPSdataScheduleTime = 5;
+        this.isNoiseSensorOn = false;
+        this.noiseDataScheduleTime = 3;
+        this.isOrdinalDataOn = true;
+        ordinalValues = new ArrayList<String>();
+
+
+        ordinalValues.add("High hello how are you?");
+        ordinalValues.add("Medium");
+        ordinalValues.add("Low");
+        ordinalValues.add("lower");
+        ordinalValues.add("Lowest");
+        ordinalValues.add("much lower");
+        ordinalValues.add("such lowest wow incredible");
+
+
         this.noOfOridnalValues = ordinalValues.size();
 
 

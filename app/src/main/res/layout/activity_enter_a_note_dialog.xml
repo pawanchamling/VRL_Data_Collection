@@ -6,58 +6,99 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="371dp"
+        android:layout_height="0px"
         android:weightSum="8"
-        android:layout_weight="7.61">
+        android:layout_weight="0.5">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Enter a Note"
-            android:id="@+id/textView_enter_a_note"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:textAlignment="center" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter a Note"
+                android:id="@+id/textView_enter_a_note"
+                android:textAlignment="center"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="8.5">
+
+
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/editText_note"
             android:layout_below="@+id/textView_enter_a_note"
+            android:background="@drawable/blue_border_white_background"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="64dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:weightSum="10"
+        >
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_dialog_btn_save"
-            android:id="@+id/button_save_note"
-            android:onClick="saveText"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="82dp"
-            android:layout_marginStart="82dp" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="5"
+                >
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_dialog_btn_cancel"
-            android:id="@+id/button_cancel_note"
-            android:onClick="cancelDialog"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="52dp"
-            android:layout_marginEnd="52dp" />
-    </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
 
+                    <Button
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txt_dialog_btn_save"
+                        android:id="@+id/button_save_note"
+                        android:onClick="saveText"
+                        android:background="#66c7ec"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="5"
+                >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <Button
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txt_dialog_btn_cancel"
+                        android:id="@+id/button_cancel_note"
+                        android:onClick="cancelDialog"
+                        android:background="#66c7ec"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
 </LinearLayout>

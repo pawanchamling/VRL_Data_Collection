@@ -257,7 +257,7 @@ public class SensorDataCollectionService extends Service implements SensorEventL
     class GenerateUserActivityThread extends Thread {
         public void run() {
 //            if (Sensors.DEBUG) {
-//                Log.d(LOG_TAG, "Waiting 2 sec for switching back the screen ...");
+//                Log.d(LOG_TAG, "Waiting 2 sec for switching blue_border_white_background the screen ...");
 //            }
 
             try {

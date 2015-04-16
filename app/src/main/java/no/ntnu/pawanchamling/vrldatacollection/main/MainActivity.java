@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        settings = new Settings(); //retrieve settings frome the DB or file later
+        settings = new Settings(); //retrieve settings from the DB or file later
 
 
     }
@@ -119,23 +119,32 @@ public class MainActivity extends ActionBarActivity {
         // startService(serviceIntent);
 
         //### Sound Record Service
-        Intent soundRecordServiceIntent = new Intent(this, SoundRecordService.class );
-        //Bundle soundServiceExtras = soundRecordServiceIntent.getExtras();
-       // soundServiceExtras.putString("timestamp", fullTimeStamp);
-        soundRecordServiceIntent.putExtra("timestamp", fileNameTimeStamp);
-        Bundle soundRecordServiceBundle = new Bundle();
-        soundRecordServiceBundle.putSerializable("settings", settings );
-        soundRecordServiceIntent.putExtras(soundRecordServiceBundle);
-        startService(soundRecordServiceIntent);
-
+        if(settings.isNoiseSensorOn()) {
+            Intent soundRecordServiceIntent = new Intent(this, SoundRecordService.class);
+            //Bundle soundServiceExtras = soundRecordServiceIntent.getExtras();
+            // soundServiceExtras.putString("timestamp", fullTimeStamp);
+            soundRecordServiceIntent.putExtra("timestamp", fileNameTimeStamp);
+            Bundle soundRecordServiceBundle = new Bundle();
+            soundRecordServiceBundle.putSerializable("settings", settings);
+            soundRecordServiceIntent.putExtras(soundRecordServiceBundle);
+            startService(soundRecordServiceIntent);
+        }
+        else {
+            Log.i("###MainActivity", "Noise Data is off so service not started");
+        }
 
         //### GPS Record Service
-        Intent gpsServiceIntent = new Intent(this, GPSRecordService.class );
-        gpsServiceIntent.putExtra("timestamp", fileNameTimeStamp);
-        Bundle gpsServiceBundle = new Bundle();
-        gpsServiceBundle.putSerializable("settings", settings );
-        gpsServiceIntent.putExtras(gpsServiceBundle);
-        startService(gpsServiceIntent);
+        if(settings.isGPSsensorOn()) {
+            Intent gpsServiceIntent = new Intent(this, GPSRecordService.class);
+            gpsServiceIntent.putExtra("timestamp", fileNameTimeStamp);
+            Bundle gpsServiceBundle = new Bundle();
+            gpsServiceBundle.putSerializable("settings", settings);
+            gpsServiceIntent.putExtras(gpsServiceBundle);
+            startService(gpsServiceIntent);
+        }
+        else {
+            Log.i("###MainActivity", "GPS Data is off so service not started");
+        }
 
 
     }

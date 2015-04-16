@@ -3,12 +3,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:weightSum="1">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="0dip"
+        android:layout_height="0px"
         android:layout_weight="0.1">
 
         <Button
@@ -17,42 +17,66 @@
             android:text="@string/txt_stop_session"
             android:id="@+id/button_stop_session"
             android:onClick="onClickStopSession"
+            android:background="#66c7ec"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="0.8">
+        android:layout_height="0px"
+        android:layout_weight="0.6">
 
         <ScrollView
-            android:id="@+id/userNotes_scroller"
+            android:id="@+id/scroller_userNotes"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:scrollbars="vertical"
             android:fillViewport="true">
 
             <TextView
-                android:id="@+id/textView_user_notes"
+                android:id="@+id/textView_userNotes"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:background="@drawable/blue_border_white_background"
                 android:scrollbars="vertical"
                 android:keepScreenOn="true"/>
 
         </ScrollView>
     </LinearLayout>
 
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="0dip"
+        android:layout_height="0px"
+        android:layout_weight="0.2">
+
+        <ScrollView
+            android:id="@+id/scroller_ordinalButtons"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scrollbars="vertical"
+            android:fillViewport="true">
+
+            <no.ntnu.pawanchamling.vrldatacollection.helper.FlowLayout
+                android:id="@+id/layout_ordinalButtonsContainer"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scrollbars="vertical"
+                />
+
+        </ScrollView>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
         android:layout_weight="0.1">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/blue_border_white_background"
             android:layout_gravity="center_horizontal">
 
             <Button
@@ -61,6 +85,7 @@
                 android:text="@string/txt_enter_a_note"
                 android:id="@+id/button_enter_a_note"
                 android:onClick="onClickStartANoteDialogBtn"
+                android:background="#66c7ec"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
         </RelativeLayout>
