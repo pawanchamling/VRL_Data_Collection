@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -53,7 +54,7 @@ public class OrdinalValuesActivity extends ActionBarActivity {
         containerLayout = (LinearLayout) findViewById(R.id.layout_container);
 
 
-        for(int i = 0; i < noOfOrdinalValues; i++){
+        for(int i = 0; i < noOfOrdinalValues; i++) {
             if(i == 0) {
                 editTextOrdinal1.setText("" + ordinalValues.get(i), TextView.BufferType.EDITABLE);
             }
@@ -73,6 +74,8 @@ public class OrdinalValuesActivity extends ActionBarActivity {
 
                 tableRow.setLayoutParams(lp);
                 tableRow.setWeightSum(1.0f);
+                tableRow.setId(1000+i);
+              //  tableRow.setTag();
                // tableRow.setBackgroundColor(Color.BLUE);
                 tableRow.setOrientation(TableRow.HORIZONTAL);
 
@@ -87,6 +90,7 @@ public class OrdinalValuesActivity extends ActionBarActivity {
 
                 Button deleteButton = new Button(this);
                 deleteButton.setText("Delete");
+                deleteButton.setId(i);
                // TableRow.LayoutParams lp4 = new TableRow.LayoutParams()
                 TableRow.LayoutParams lp3 =   new TableRow.LayoutParams(
                         0,
@@ -97,7 +101,11 @@ public class OrdinalValuesActivity extends ActionBarActivity {
 
                     @Override
                     public void onClick(View v) {
-
+                        //delete the textView that the button is contained
+                        int index = v.getId();
+                        TableRow tr = (TableRow) findViewById(1000 + index);
+                        ViewGroup parentView = (ViewGroup) v.getParent().getParent();
+                        parentView.removeView(tr);
                     }
                 });
 
@@ -109,7 +117,7 @@ public class OrdinalValuesActivity extends ActionBarActivity {
             }
 
 
-        }
+        } //the for-loop
 
 
     }
