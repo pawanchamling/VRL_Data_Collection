@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import no.ntnu.pawanchamling.vrldatacollection.R;
@@ -33,7 +34,7 @@ public class OrdinalValuesActivity extends ActionBarActivity {
     private EditText editTextOrdinal2;
 
     private int addedOrdinalValueIndex;
-    private HashMap<Integer, Integer> addedOrdinalValues = new HashMap<Integer, Integer>();
+    private LinkedHashMap<Integer, Integer> addedOrdinalValues = new LinkedHashMap<Integer, Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
