@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
@@ -37,6 +38,11 @@ public class EnterANoteDialogActivity extends ActionBarActivity implements NoteD
 
         dialogPresenter = new DialogPresenter(this);
         noteEditText = (EditText) findViewById(R.id.editText_note);
+
+        //Trying to have the soft keyboard shown //isn't workin
+//        noteEditText.requestFocus();
+//        InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+//        imm.showSoftInput(noteEditText, InputMethodManager.SHOW_IMPLICIT);
 
     }
 

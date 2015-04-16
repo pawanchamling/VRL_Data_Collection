@@ -93,7 +93,7 @@
                 android:id="@+id/button_enter_a_note"
                 android:onClick="onClickStartANoteDialogBtn"
                 android:background="#66c7ec"
-                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </LinearLayout>
