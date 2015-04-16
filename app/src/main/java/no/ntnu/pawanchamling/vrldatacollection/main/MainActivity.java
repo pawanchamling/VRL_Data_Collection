@@ -3,11 +3,13 @@ package no.ntnu.pawanchamling.vrldatacollection.main;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import no.ntnu.pawanchamling.vrldatacollection.AppSettings.SettingActivity;
@@ -23,6 +25,8 @@ public class MainActivity extends ActionBarActivity {
     //private ResponseBroadcastReceiver receiver;
     private boolean isSessionActive = false;
 
+    private static final int SETTINGS_REQUEST_CODE = 1; //get Settings from SettingActivity
+    private static final int SESSION_REQUEST_CODE = 2; //get Settings from SettingActivity
     private Settings settings;
 
     @Override
@@ -55,14 +59,14 @@ public class MainActivity extends ActionBarActivity {
 
     public void startAppSettingActivity(View v) {
 
-        //System.out.println("###MainActivity: Starting App Setting Activity");
+        //Log.i("###MainActivity", "Starting App Setting Activity");
 
         Intent appSettingIntent = new Intent(MainActivity.this, SettingActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("settings", settings );
         appSettingIntent.putExtras(bundle);
 
-        startActivity(appSettingIntent);
+        startActivityForResult(appSettingIntent, SETTINGS_REQUEST_CODE);
     }
 
     protected void onResume(){
@@ -72,11 +76,9 @@ public class MainActivity extends ActionBarActivity {
 
         if(isSessionActive) {
             stopSensorService();
-            //System.out.println("### Stopping Service");
             isSessionActive = false;
         }
         else {
-           // System.out.println("### Doing nothing");
         }
 
     }
@@ -162,5 +164,52 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (resultCode == RESULT_OK  && requestCode == SETTINGS_REQUEST_CODE) {
+            if (data.hasExtra("settings")) {
+                // Toast.makeText(this, data.getExtras().getString("myData1"),
+                //         Toast.LENGTH_SHORT).show();
+                this.settings = (Settings) data.getSerializableExtra("settings");
+                // String timeStamp = data.getExtras().getString("timeStamp");
+
+                Log.i("###MainActivity", "The value received on the MainActivity page " );
+                if(settings.isGPSsensorOn()) {
+                    Log.i("###MainActivity", "GPS On");
+                }
+                else {
+                    Log.i("###MainActivity", "GPS Off");
+                }
+
+                if(settings.isNoiseSensorOn()) {
+                    Log.i("###MainActivity", "NoiseSensor On");
+                }
+                else {
+                    Log.i("###MainActivity", "NoiseSensor Off");
+                }
+
+                if(settings.isOrdinalDataOn()) {
+                    Log.i("###MainActivity", "Ordinal Data On");
+                }
+                else {
+                    Log.i("###MainActivity", "Ordinal Data Off");
+                }
+
+                Log.i("###MainActivity", "GPS interval : " + settings.getGPSdataScheduleTime());
+                Log.i("###MainActivity", "Noise Data interval : " + settings.getNoiseDataScheduleTime());
+
+                Log.i("###MainActivity", "No. of Ordinal Values : " + settings.getNoOfOridnalValues());
+
+
+                ArrayList<String> ordinalValues = settings.getOrdinalValues();
+                for(int i = 0; i < settings.getNoOfOridnalValues(); i++) {
+                    Log.i("###MainActivity", " : " +  ordinalValues.get(i));
+                    //System.out.println("### " + ordinalValues.get(i));
+                }
+
+            }
+        }
+    }
 }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -65,10 +66,10 @@ public class GPSRecordService extends Service {
         //this.theMainTimeStamp = id.getString("timestamp");
 
 
-        System.out.println("!!!GPSRecordService: Serializable object received");
-        System.out.println("!!!GPSRecordService: no. of ordinal values = " + settings.getNoOfOridnalValues());
-        // System.out.println("!!! Inside the onStartCommand ");
-        System.out.println("!!!GPSRecordService: The Main Timestamp = " + settings.getFileTimeStamp());
+        Log.i("!!!GPSRecordService", "Serializable object received");
+        Log.i("!!!GPSRecordService", "no. of ordinal values = " + settings.getNoOfOridnalValues());
+        // Log.i("!!!GPSRecordService", "Inside the onStartCommand ");
+        Log.i("!!!GPSRecordService", "The Main Timestamp = " + settings.getFileTimeStamp());
         //Toast.makeText(this, "!!! Service Started " + value, Toast.LENGTH_LONG).show();
         // If we get killed, after returning from here, restart
         return START_STICKY;
@@ -78,7 +79,7 @@ public class GPSRecordService extends Service {
     @Override
     public void onCreate() {
         // cancel if already existed
-        //System.out.println("!!!GPSRecordService: Inside the GPSRecordService");
+        //Log.i("!!!GPSRecordService", "Inside the GPSRecordService");
         if(mTimer != null) {
             mTimer.cancel();
         } else {
@@ -109,7 +110,7 @@ public class GPSRecordService extends Service {
     @Override
     public void onDestroy(){
 
-        System.out.println("!!!GPSRecordService: Service about to get destroyed");
+        Log.i("!!!GPSRecordService", "Service about to get destroyed");
 
         mTimer.cancel(); //Stopping the scheduled task
 
@@ -120,7 +121,7 @@ public class GPSRecordService extends Service {
 
 
     private void saveDataToTheFile(){
-        System.out.println("!!!GPSRecordService: Saving data to the file");
+        Log.i("!!!GPSRecordService", "Saving data to the file");
 
         //double max = 0, min = timeStampData.get(0);
 
@@ -145,7 +146,7 @@ public class GPSRecordService extends Service {
         //jsonHeaderString += "'threshold':'" + new Integer(mSoundThreshold).toString() + "'},";
         jsonHeaderString += "'values':[";
 
-        //System.out.println("!!!SoundRecordService: Max: " + max + " & Min: " + min );
+        //Log.i("!!!GPSRecordService", "Max: " + max + " & Min: " + min );
 
         jsonData = jsonHeaderString + jsonData;
 
@@ -167,7 +168,7 @@ public class GPSRecordService extends Service {
 
             //display file saved message
             Toast.makeText(getBaseContext(), "Data files saved successfully!", Toast.LENGTH_SHORT).show();
-            System.out.println("!!!GPSRecordService: Data Saved Successfully");
+            Log.i("!!!GPSRecordService", "Data Saved Successfully");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -190,25 +191,25 @@ public class GPSRecordService extends Service {
                     // display toast
                     Toast.makeText(getApplicationContext(), getDateTime(), Toast.LENGTH_SHORT).show();
 
-                    System.out.println("!!!GPSRecordService: 5 Seconds gone");
+                    Log.i("!!!GPSRecordService", "5 Seconds gone");
 
                     mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mGPSListener);
 
                     if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         if (GPSListener.latitude > 0) {
-                            System.out.println("!!!GPSRecordService: Latitude:- " + GPSListener.latitude + '\n');
-                            System.out.println("!!!GPSRecordService: Longitude:- " + GPSListener.longitude + '\n');
+                            Log.i("!!!GPSRecordService", "Latitude:- " + GPSListener.latitude + '\n');
+                            Log.i("!!!GPSRecordService", "Longitude:- " + GPSListener.longitude + '\n');
 
                             timeStampData.add(getFullTimeStamp());
                             latitudeData.add(new Double(GPSListener.latitude));
                             longitudeData.add(new Double(GPSListener.longitude));
 
                         } else {
-                            System.out.println("!!!GPSRecordService: Wait");
-                            System.out.println("!!!GPSRecordService: GPS in progress, please wait.");
+                            Log.i("!!!GPSRecordService", "Wait");
+                            Log.i("!!!GPSRecordService", "GPS in progress, please wait.");
                         }
                     } else {
-                        System.out.println("!!!GPSRecordService: GPS is not turned on...");
+                        Log.i("!!!GPSRecordService", "GPS is not turned on...");
                     }
 
                 }

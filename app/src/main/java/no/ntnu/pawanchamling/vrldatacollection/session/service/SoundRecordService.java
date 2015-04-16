@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -67,10 +68,10 @@ public class SoundRecordService extends Service {
         settings = (Settings)id.getSerializable("settings");
        // this.theMainTimeStamp = id.getString("timestamp");
 
-        System.out.println("!!!SoundRecordService: Serializable object received");
-        System.out.println("!!!SoundRecordService: no. of ordinal values = " + settings.getNoOfOridnalValues());
-       // System.out.println("!!! Inside the onStartCommand ");
-        System.out.println("!!!SoundRecordService: The Main Timestamp = " + settings.getFileTimeStamp());
+        Log.i("!!!SoundRecordService", "Serializable object received");
+        Log.i("!!!SoundRecordService", "no. of ordinal values = " + settings.getNoOfOridnalValues());
+       // Log.i("!!!SoundRecordService", "Inside the onStartCommand ");
+        Log.i("!!!SoundRecordService", "The Main Timestamp = " + settings.getFileTimeStamp());
         //Toast.makeText(this, "!!! Service Started " + value, Toast.LENGTH_LONG).show();
         // If we get killed, after returning from here, restart
         return START_STICKY;
@@ -79,7 +80,7 @@ public class SoundRecordService extends Service {
     @Override
     public void onCreate() {
         // cancel if already existed
-        System.out.println("!!!SoundRecordService: Inside the SoundRecordService");
+        Log.i("!!!SoundRecordService", "Inside the SoundRecordService");
 
         if(mTimer != null) {
             mTimer.cancel();
@@ -108,7 +109,7 @@ public class SoundRecordService extends Service {
     @Override
     public void onDestroy(){
 
-        System.out.println("!!!SoundRecordService: Service about to get destroyed");
+        Log.i("!!!SoundRecordService", "Service about to get destroyed");
         mSoundSensor.stop();  //stopping the SoundMeter
 
         mTimer.cancel(); //Stopping the scheduled task
@@ -120,7 +121,7 @@ public class SoundRecordService extends Service {
 
 
     private void saveDataToTheFile(){
-        System.out.println("!!!SoundRecordService: Saving data to the file");
+        Log.i("!!!SoundRecordService", "Saving data to the file");
 
         double max = 0, min = sensorData.get(0);
 
@@ -151,7 +152,7 @@ public class SoundRecordService extends Service {
         jsonHeaderString += "'threshold':'" + new Integer(mSoundThreshold).toString() + "'},";
         jsonHeaderString += "'values':[";
 
-        System.out.println("!!!SoundRecordService: Max: " + max + " & Min: " + min );
+        Log.i("!!!SoundRecordService", "Max: " + max + " & Min: " + min );
 
         jsonData = jsonHeaderString + jsonData;
 
@@ -173,7 +174,7 @@ public class SoundRecordService extends Service {
 
             //display file saved message
             Toast.makeText(getBaseContext(), "Data files saved successfully!", Toast.LENGTH_SHORT).show();
-            System.out.println("!!!SoundRecordService: Data Saved Successfully");
+            Log.i("!!!SoundRecordService", "Data Saved Successfully");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -195,25 +196,25 @@ public class SoundRecordService extends Service {
                     // display toast
                     Toast.makeText(getApplicationContext(), getDateTime(), Toast.LENGTH_SHORT).show();
 
-                    System.out.println("!!!SoundRecordService: 3 Seconds gone");
+                    Log.i("!!!SoundRecordService", "3 Seconds gone");
                     double amp = mSoundSensor.getAmplitude();
 
                     if(index == 0 && amp == 0) {
-                        System.out.println("!!!SoundRecordService: index = 0 and amp = 0");
+                        Log.i("!!!SoundRecordService", "index = 0 and amp = 0");
                     }
                     else {
                         //Log.i("Noise", "runnable mPollTask");
                         //updateDisplay("Monitoring Voice...", amp);
 
                         if ((amp > mSoundThreshold)) {
-                            System.out.print("!!!SoundRecordService: Threshhold Crossed @@@");
+                            Log.i("!!!SoundRecordService", "Threshhold Crossed @@@");
                             //Log.i("Noise", "==== onCreate ===");
                         }
 
                         // Runnable(mPollTask) will again execute after POLL_INTERVAL
                         //mHandler.postDelayed(mPollTask, POLL_INTERVAL);
 
-                        System.out.println("!!!SoundRecordService: [" + ++index + "] :" + getFullTimeStamp() + " Amp: " + amp);
+                        Log.i("!!!SoundRecordService", "[" + ++index + "] :" + getFullTimeStamp() + " Amp: " + amp);
 
                         timeStampData.add(getFullTimeStamp());
                         sensorData.add(new Double(amp));

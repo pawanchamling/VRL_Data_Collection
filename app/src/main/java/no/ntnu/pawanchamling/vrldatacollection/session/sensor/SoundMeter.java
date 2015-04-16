@@ -6,6 +6,7 @@ package no.ntnu.pawanchamling.vrldatacollection.session.sensor;
 
 import java.io.IOException;
 import android.media.MediaRecorder;
+import android.util.Log;
 
 public class SoundMeter {
     // This file is used to record voice
@@ -17,7 +18,7 @@ public class SoundMeter {
     public void start() {
 
         if (mRecorder == null) {
-            System.out.println("@@@SoundMeter: Starting SoundMeter");
+            Log.i("@@@SoundMeter", "Starting SoundMeter");
 
             mRecorder = new MediaRecorder();
             mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -49,7 +50,7 @@ public class SoundMeter {
             mRecorder.release();
             mRecorder = null;
         }
-        System.out.println("@@@SoundMeter: Stopping SoundMeter: Done");
+        Log.i("@@@SoundMeter", "Stopping SoundMeter: Done");
     }
 
     public double getAmplitude() {

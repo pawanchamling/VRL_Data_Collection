@@ -3,6 +3,7 @@ package no.ntnu.pawanchamling.vrldatacollection.AppSettings;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,7 +65,18 @@ public class SettingActivity extends ActionBarActivity {
     //### When 'Save Settings' button is clicked
     public void saveSetting(View v) {
 
+        settings.setGPSsensorOn(switchGPSSetting.isChecked());
+        settings.setNoiseSensorOn(switchNoiseDataSetting.isChecked());
+        settings.setOrdinalDataOn(switchOrdinalDataSetting.isChecked());
 
+        settings.setGPSdataScheduleTime(Integer.parseInt(editTextGPSInterval.getText().toString()));
+        settings.setNoiseDataScheduleTime(Integer.parseInt(editTextNoiseDataInterval.getText().toString()));
+
+
+        Intent dataReturnIntent = new Intent();
+        dataReturnIntent.putExtra("settings", settings);
+        // Activity finished ok, return the data
+        setResult(RESULT_OK, dataReturnIntent);
 
         this.finish();
     }
@@ -118,14 +130,16 @@ public class SettingActivity extends ActionBarActivity {
                // String timeStamp = data.getExtras().getString("timeStamp");
 
                 // System.out.println("############################");
-                System.out.println("### The value received on the settings page " );
+                Log.i("###SettingActivity", "The value received on the settings page ");
 
                 ArrayList<String> ordinalValues = settings.getOrdinalValues();
                 for(int i = 0; i < settings.getNoOfOridnalValues(); i++) {
-                    System.out.println("### " + ordinalValues.get(i));
+                    Log.i("###SettingActivity", "### " + ordinalValues.get(i));
                 }
 
             }
         }
     }
+
+
 }

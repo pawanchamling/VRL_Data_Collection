@@ -3,6 +3,7 @@ package no.ntnu.pawanchamling.vrldatacollection.session.sensor;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.util.Log;
 
 /**
  * Created by Pawan Chamling on 13/04/15.
@@ -27,11 +28,11 @@ public class GPSListener implements LocationListener {
 
     @Override
     public void onProviderEnabled(String provider) {
-        System.out.println("###GPSListener: GPS Enabled");
+        Log.i("@@@GPSListener", "GPS Enabled");
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        System.out.println("###GPSListener: GPS Disabled");
+        Log.i("@@@GPSListener", "GPS Disabled");
     }
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,11 +40,11 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
         //this.theMainTimeStamp = settings.getFileTimeStamp();
 
 
-        System.out.println("### SessionActivity: Serializable object received");
-        System.out.println("### SessionActivity: no. of ordinal values = " + settings.getNoOfOridnalValues());
+        Log.i("###SessionActivity", "Serializable object received");
+        Log.i("###SessionActivity", "no. of ordinal values = " + settings.getNoOfOridnalValues());
 
         //this.theMainTimeStamp = savedInstanceState.getString("timestamp");
-        System.out.println("### SessionActivity: timestamp received: "+ settings.getFileTimeStamp());
+        Log.i("###SessionActivity", "timestamp received: "+ settings.getFileTimeStamp());
 
         presenter = new SessionPresenter(this, settings.getFileTimeStamp());
 
@@ -121,7 +122,7 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
                 String timeStamp = data.getExtras().getString("timeStamp");
 
                // System.out.println("############################");
-                System.out.println("The value received = " + timeStamp + ": "+ noteString);
+                Log.i("###SessionActivity", "The value received = " + timeStamp + ": "+ noteString);
 
                 presenter.addNominalNote(timeStamp, noteString);
                 presenter.appendMessagePanel(noteString);

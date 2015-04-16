@@ -1,6 +1,7 @@
 package no.ntnu.pawanchamling.vrldatacollection.session;
 
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -44,14 +45,14 @@ public class SessionPresenter {
         ArrayList<String> data = this.nominalData.getNominalData();
         ArrayList<String> timeStampData = this.nominalData.getTimeStampData();
 
-        System.out.println("###SessionPresenter: No. of items in the list: " + data.size());
-        System.out.println("###SessionPresenter: =" + data.toString() + "=");
+        Log.i("###SessionPresenter", "No. of items in the list: " + data.size());
+        Log.i("###SessionPresenter", "=" + data.toString() + "=");
         for(String value: data){
             System.out.println(value);
         }
-        System.out.println("--------------------");
+        Log.i("###SessionPresenter", "--------------------");
 
-        System.out.println("###SessionPresenter: Saving data to the file");
+        Log.i("###SessionPresenter", "Saving data to the file");
 
         String jsonData = "";
 
@@ -94,7 +95,7 @@ public class SessionPresenter {
 
             //display file saved message
            // Toast.makeText(getBaseContext(), "Data files saved successfully!", Toast.LENGTH_SHORT).show();
-            System.out.println("###SessionPresenter: Data Saved Successfully");
+            Log.i("###SessionPresenter", "Data Saved Successfully");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,12 +118,12 @@ public class SessionPresenter {
 
         SimpleDateFormat sdf = new SimpleDateFormat(fullTimeStampFormat);
         String fullTimeStamp = sdf.format(currentDateTime);
-        //System.out.println("Timestamp: " + fullTimeStamp);
+        //Log.i("###SessionPresenter", "Timestamp: " + fullTimeStamp);
         sdf.applyPattern(shortTimeStampFormat);
         String shortTimeStamp =sdf.format(currentDateTime);
 
 
-        System.out.println("###SessionPresenter: TimeStamp: " + fullTimeStamp);
+        Log.i("###SessionPresenter", "TimeStamp: " + fullTimeStamp);
         sessionView.appendMessagePanel("[" + shortTimeStamp + "] : " + message + "\n");
     }
 
