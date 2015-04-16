@@ -2,7 +2,6 @@ package no.ntnu.pawanchamling.vrldatacollection.session;
 
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,7 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import no.ntnu.pawanchamling.vrldatacollection.model.NominalData;
+import no.ntnu.pawanchamling.vrldatacollection.model.Settings;
+import no.ntnu.pawanchamling.vrldatacollection.model.UserSubmittedData;
 
 /**
  * Created by Pawan Chamling on 04/04/15.
@@ -22,13 +22,18 @@ public class SessionPresenter {
 
     private String theMainTimeStamp;
 
-    private final NominalData nominalData;
+    private final UserSubmittedData nominalData;
+    private final UserSubmittedData ordinalData;
 
-    public SessionPresenter(SessionView sessionView, String theMainTimeStamp){
+    private Settings settings;
+
+    public SessionPresenter(SessionView sessionView, String theMainTimeStamp, Settings settings){
         this.sessionView = sessionView;
         this.theMainTimeStamp = theMainTimeStamp;
+        this.settings = settings;
 
-        this.nominalData = new NominalData();
+        this.nominalData = new UserSubmittedData();
+        this.ordinalData = new UserSubmittedData();
 
     }
 
@@ -40,25 +45,35 @@ public class SessionPresenter {
         this.nominalData.addValue(timeStamp, note);
     }
 
-    public void stopSession() {
+    public void addOrdinalData(String timeStamp, String ordinalValue) {
+        this.ordinalData.addValue(timeStamp, ordinalValue);
+    }
 
-        ArrayList<String> data = this.nominalData.getNominalData();
+
+    public void stopSession() {
+        saveNominalData();
+
+        if(settings.isOrdinalDataOn()) {
+            saveOrdinalData();
+        }
+    }
+
+    public void saveNominalData() {
+
+        ArrayList<String> nominalValues = this.nominalData.getNominalData();
         ArrayList<String> timeStampData = this.nominalData.getTimeStampData();
 
-        Log.i("###SessionPresenter", "No. of items in the list: " + data.size());
-        Log.i("###SessionPresenter", "=" + data.toString() + "=");
-        for(String value: data){
-            System.out.println(value);
-        }
-        Log.i("###SessionPresenter", "--------------------");
+        Log.i("###SessionPresenter", "Saving Nominal data to the file");
 
-        Log.i("###SessionPresenter", "Saving data to the file");
+
 
         String jsonData = "";
 
         for(int i = 0; i < timeStampData.size(); i++){
-            jsonData += "{'timestamp':'" + timeStampData.get(i) + "',";
-            jsonData += "'value':'" + data.get(i) + "'}";
+            jsonData += "{\"timestamp\":\"" + timeStampData.get(i) + "\",";
+
+            String cleanerValue = nominalValues.get(i).replaceAll("(\\r|\\n|\\r\\n)+", "\\\\n");
+            jsonData += "\"value\":\"" + cleanerValue + "\"}";
 
             //if not the last value
             if(i != timeStampData.size() - 1){
@@ -68,16 +83,16 @@ public class SessionPresenter {
 
         jsonData += "]}";
 
-        String jsonHeaderString = "{'name':'User Notes', 'Source':'Android Mobile','type':'0',";
-        jsonHeaderString += "'valueInfo':{},"; //'max':'" + new Double(max).toString() + "',";
-        //jsonHeaderString += "'min':'" + new Double(min).toString() + "',";
-        //jsonHeaderString += "'threshold':'" + new Integer(mSoundThreshold).toString() + "'},";
-        jsonHeaderString += "'values':[";
+        String jsonHeaderString = "{\"name\":\"User Notes\", \"Source\":\"Android Mobile\",\"type\":\"0\",";
+        jsonHeaderString += "\"valueInfo\":{},"; //\"max\":\"" + new Double(max).toString() + "\",";
+        //jsonHeaderString += "\"min\":\"" + new Double(min).toString() + "\",";
+        //jsonHeaderString += "\"threshold\":\"" + new Integer(mSoundThreshold).toString() + "\"},";
+        jsonHeaderString += "\"values\":[";
 
 
         jsonData = jsonHeaderString + jsonData;
 
-        // add-write text into file
+        // add-write text into a file
         try {
             //This will get the SD Card directory and create a folder named MyFiles in it.
             File sdCard = Environment.getExternalStorageDirectory();
@@ -94,8 +109,8 @@ public class SessionPresenter {
             outputWriter.close();
 
             //display file saved message
-           // Toast.makeText(getBaseContext(), "Data files saved successfully!", Toast.LENGTH_SHORT).show();
-            Log.i("###SessionPresenter", "Data Saved Successfully");
+            // Toast.makeText(getBaseContext(), "Data files saved successfully!", Toast.LENGTH_SHORT).show();
+            Log.i("###SessionPresenter", "Nominal Data Saved Successfully");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,9 +118,93 @@ public class SessionPresenter {
 
 
 
+
     }
 
+    public void saveOrdinalData() {
 
+        ArrayList<String> ordinalValues = this.ordinalData.getNominalData();
+        ArrayList<String> timeStampData = this.ordinalData.getTimeStampData();
+
+        Log.i("###SessionPresenter", "No. of items in the Ordinal list: " + ordinalValues.size());
+        Log.i("###SessionPresenter", "=" + ordinalValues.toString() + "=");
+        for(String value: ordinalValues){
+            System.out.println(value);
+        }
+        Log.i("###SessionPresenter", "--------------------");
+
+        Log.i("###SessionPresenter", "Saving data to the file");
+
+
+
+        String jsonData = "";
+        ArrayList<String> ordinalSettingValues = settings.getOrdinalValues();
+
+        for(int i = 0; i < timeStampData.size(); i++){
+            jsonData += "{\"timestamp\":\"" + timeStampData.get(i) + "\",";
+
+            int ordinalIndex = 0;
+            for(int j = 0; j < ordinalSettingValues.size(); j++) {
+                //Log.i("###SessionPresenter", ordinalValues.get(i));
+                if(ordinalValues.get(i) == ordinalSettingValues.get(j)) {
+                    jsonData += "\"value\":\"" + j + "\"}";
+                    Log.i("###SessionPresenter", "OrdinalValues and OrdinalSettingValues match");
+                    Log.i("###SessionPresenter", "OrdinalValues = " + ordinalValues.get(i));
+                }
+            }
+
+
+            //if not the last value
+            if(i != timeStampData.size() - 1){
+                jsonData += ",";
+            }
+        }
+
+        jsonData += "]}";
+
+        String jsonHeaderString = "{\"name\":\"Ordinal Values\", \"Source\":\"Android Mobile\",\"type\":\"1\",";
+        jsonHeaderString += "\"valueInfo\":{";
+        for(int i = 0; i < ordinalSettingValues.size(); i++) {
+            jsonHeaderString += "\"" + ordinalSettingValues.get(i) + "\":" + i;
+            if(i != ordinalSettingValues.size() - 1){
+                jsonHeaderString += ",";
+            }
+        }
+        jsonHeaderString += "},";
+        jsonHeaderString += "\"values\":[";
+
+
+        jsonData = jsonHeaderString + jsonData;
+
+        Log.i("###SessionPresenter", jsonData);
+
+
+        // add-write text into a file
+        try {
+            //This will get the SD Card directory and create a folder named MyFiles in it.
+            File sdCard = Environment.getExternalStorageDirectory();
+            File directory = new File (sdCard.getAbsolutePath() + "/VRL_Data");
+            directory.mkdirs();
+
+            //Now create the file in the above directory and write the contents into it
+            File file = new File(directory, theMainTimeStamp +"_Ordinal_data.txt");
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            OutputStreamWriter outputWriter = new OutputStreamWriter(fileOutputStream);
+
+            outputWriter.write(jsonData);
+            outputWriter.flush();
+            outputWriter.close();
+
+            //display file saved message
+            // Toast.makeText(getBaseContext(), "Data files saved successfully!", Toast.LENGTH_SHORT).show();
+            Log.i("###SessionPresenter", "Ordinal Data Saved Successfully");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
     public void appendMessagePanel(String message){
 

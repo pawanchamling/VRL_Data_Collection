@@ -209,7 +209,7 @@
                     android:background="#66c7ec"
                     android:onClick="startOrdinalValuesActivity"
                     android:layout_weight="0.5"
-                    android:textSize="22px" />
+                    android:textSize="26px" />
 
             </TableRow>
 

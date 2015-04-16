@@ -128,8 +128,8 @@ public class SoundRecordService extends Service {
         String jsonData = "";
 
         for(int i = 0; i < sensorData.size(); i++){
-            jsonData += "{'timestamp':'" + timeStampData.get(i) + "',";
-            jsonData += "'value':'" + new Double(sensorData.get(i)).toString() + "'}";
+            jsonData += "{\"timestamp\":\"" + timeStampData.get(i) + "\",";
+            jsonData += "\"value\":\"" + new Double(sensorData.get(i)).toString() + "\"}";
 
             //if not the last value
             if(i != sensorData.size() - 1){
@@ -146,11 +146,11 @@ public class SoundRecordService extends Service {
         }
         jsonData += "]}";
 
-        String jsonHeaderString = "{'name':'Noise Data', 'Source':'Android Mobile','type':'2',";
-        jsonHeaderString += "'valueInfo':{'max':'" + new Double(max).toString() + "',";
-        jsonHeaderString += "'min':'" + new Double(min).toString() + "',";
-        jsonHeaderString += "'threshold':'" + new Integer(mSoundThreshold).toString() + "'},";
-        jsonHeaderString += "'values':[";
+        String jsonHeaderString = "{\"name\":\"Noise Data\", \"Source\":\"Android Mobile\",\"type\":\"2\",";
+        jsonHeaderString += "\"valueInfo\":{\"max\":\"" + new Double(max).toString() + "\",";
+        jsonHeaderString += "\"min\":\"" + new Double(min).toString() + "\",";
+        jsonHeaderString += "\"threshold\":\"" + new Integer(mSoundThreshold).toString() + "\"},";
+        jsonHeaderString += "\"values\":[";
 
         Log.i("!!!SoundRecordService", "Max: " + max + " & Min: " + min );
 

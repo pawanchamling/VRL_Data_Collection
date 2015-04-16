@@ -14,7 +14,9 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import no.ntnu.pawanchamling.vrldatacollection.R;
 import no.ntnu.pawanchamling.vrldatacollection.helper.FlowLayout;
@@ -55,7 +57,7 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
         //this.theMainTimeStamp = savedInstanceState.getString("timestamp");
         Log.i("###SessionActivity", "timestamp received: "+ settings.getFileTimeStamp());
 
-        presenter = new SessionPresenter(this, settings.getFileTimeStamp());
+        presenter = new SessionPresenter(this, settings.getFileTimeStamp(), settings);
 
         userActionsMessages = (TextView) findViewById(R.id.textView_userNotes);
         userNotes_scroller = (ScrollView)findViewById(R.id.scroller_userNotes);
@@ -65,8 +67,11 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
         ordinalValuesContainer = (FlowLayout) findViewById(R.id.layout_ordinalButtonsContainer);
 
 
-        loadOrdinalButtons();
+        userActionsMessages.append("Session Started at [" + settings.getFileTimeStamp() + "] \n");
 
+        if(settings.isOrdinalDataOn()) {
+            loadOrdinalButtons();
+        }
     }
 
 
@@ -86,7 +91,7 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
 
     }
 
-    private void createButton(int index, String name, String text){
+    private void createButton(int index, String name, final String text){
 
         Log.i("###OrdinalValuesActivity", "Adding a button with name " + name);
         Button ordinalValueButton = new Button(this);
@@ -105,16 +110,12 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
 
             @Override
             public void onClick(View v) {
-                //delete the textView that the button is contained
-//                int index = v.getId();
-//                TableRow tr = (TableRow) findViewById(1000 + index);
-//                ViewGroup parentView = (ViewGroup) v.getParent().getParent();
-//                parentView.removeView(tr);
-//                //--noOfOrdinalValues;
-//                addedOrdinalValues.remove(index);
 
-//                Log.i("###OrdinalValuesActivity", "A TableRow with Id = " + 1000 + index + " Deleted");
-                Log.i("###OrdinalValuesActivity", "Ordinal Button with text : ");
+                  // v.getT
+                presenter.addOrdinalData(getFullTimeStamp(), text);
+                presenter.appendMessagePanel("[Ordinal] " + text);
+
+                Log.i("###OrdinalValuesActivity", "Ordinal Button with text : " + text);
             }
         });
 
@@ -224,4 +225,15 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
         });
     }
 
+
+    private String getFullTimeStamp() {
+        String fullTimeStampFormat = "yyyy-MM-dd-HHmmss.SS";
+
+        Date currentDateTime = new Date();
+
+        SimpleDateFormat sdf = new SimpleDateFormat(fullTimeStampFormat);
+
+        return sdf.format(currentDateTime);
+
+    }
 }

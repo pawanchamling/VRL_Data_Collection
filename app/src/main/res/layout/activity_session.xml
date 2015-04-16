@@ -11,14 +11,21 @@
         android:layout_height="0px"
         android:layout_weight="0.1">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_stop_session"
-            android:id="@+id/button_stop_session"
-            android:onClick="onClickStopSession"
-            android:background="#66c7ec"
-            android:layout_gravity="center_horizontal" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_stop_session"
+                android:id="@+id/button_stop_session"
+                android:onClick="onClickStopSession"
+                android:background="#66c7ec"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -80,7 +87,7 @@
             android:layout_gravity="center_horizontal">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_enter_a_note"
                 android:id="@+id/button_enter_a_note"

@@ -128,9 +128,9 @@ public class GPSRecordService extends Service {
         String jsonData = "";
 
         for(int i = 0; i < timeStampData.size(); i++){
-            jsonData += "{'timestamp':'" + timeStampData.get(i) + "',";
-            jsonData += "'latitude':'" + new Double(latitudeData.get(i)).toString() + "',";
-            jsonData += "'longitude':'" + new Double(longitudeData.get(i)).toString() + "'}";
+            jsonData += "{\"timestamp\":\"" + timeStampData.get(i) + "\",";
+            jsonData += "\"latitude\":\"" + new Double(latitudeData.get(i)).toString() + "\",";
+            jsonData += "\"longitude\":\"" + new Double(longitudeData.get(i)).toString() + "\"}";
 
             //if not the last value
             if(i != timeStampData.size() - 1){
@@ -140,11 +140,11 @@ public class GPSRecordService extends Service {
 
         jsonData += "]}";
 
-        String jsonHeaderString = "{'name':'GPS Data', 'Source':'Android Mobile','type':'3',";
-        jsonHeaderString += "'valueInfo':{},"; //'max':'" + new Double(max).toString() + "',";
-        //jsonHeaderString += "'min':'" + new Double(min).toString() + "',";
-        //jsonHeaderString += "'threshold':'" + new Integer(mSoundThreshold).toString() + "'},";
-        jsonHeaderString += "'values':[";
+        String jsonHeaderString = "{\"name\":\"GPS Data\", \"Source\":\"Android Mobile\",\"type\":\"3\",";
+        jsonHeaderString += "\"valueInfo\":{},"; //\"max\":\"" + new Double(max).toString() + "\",";
+        //jsonHeaderString += "\"min\":\"" + new Double(min).toString() + "\",";
+        //jsonHeaderString += "\"threshold\":\"" + new Integer(mSoundThreshold).toString() + "\"},";
+        jsonHeaderString += "\"values\":[";
 
         //Log.i("!!!GPSRecordService", "Max: " + max + " & Min: " + min );
 
@@ -173,7 +173,6 @@ public class GPSRecordService extends Service {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
     }
 
