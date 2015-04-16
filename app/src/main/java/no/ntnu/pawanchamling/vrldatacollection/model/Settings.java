@@ -26,8 +26,17 @@ public class Settings implements Serializable{
         this.isNoiseSensorOn = true;
         this.noiseDataScheduleTime = 3;
         this.isOrdinalDataOn = true;
-        this.noOfOridnalValues = 3;
         ordinalValues = new ArrayList<String>();
+
+
+        ordinalValues.add("High");
+        ordinalValues.add("Medium");
+        ordinalValues.add("Low");
+
+
+        this.noOfOridnalValues = ordinalValues.size();
+
+
     }
 
     public String getFileTimeStamp() {

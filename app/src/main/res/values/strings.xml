@@ -33,5 +33,6 @@
     <string name="pref_user_profile">User Profile</string>
     <string name="pref_update_setting">Update Settings</string>
     <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_activity_ordinal_values">OrdinalValuesActivity</string>
 
 </resources>

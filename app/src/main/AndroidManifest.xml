@@ -45,6 +45,10 @@
             android:name=".AppSettings.SettingActivity"
             android:label="@string/title_activity_setting" >
         </activity>
+        <activity
+            android:name=".AppSettings.OrdinalValuesActivity"
+            android:label="@string/title_activity_ordinal_values" >
+        </activity>
     </application>
 
 </manifest>

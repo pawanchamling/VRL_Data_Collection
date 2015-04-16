@@ -1,5 +1,6 @@
 package no.ntnu.pawanchamling.vrldatacollection.AppSettings;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -56,6 +57,26 @@ public class SettingActivity extends ActionBarActivity {
         this.finish();
     }
 
+    //### When 'Save Settings' button is clicked
+    public void saveSetting(View v) {
+
+
+
+        this.finish();
+    }
+
+
+    public void startOrdinalValuesActivity(View v) {
+
+        //System.out.println("###MainActivity: Starting App Setting Activity");
+
+        Intent ordinalValuesSettingIntent = new Intent(this, OrdinalValuesActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("settings", settings );
+        ordinalValuesSettingIntent.putExtras(bundle);
+
+        startActivity(ordinalValuesSettingIntent);
+    }
 
 
     @Override
