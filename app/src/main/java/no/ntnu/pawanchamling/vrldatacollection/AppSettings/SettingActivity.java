@@ -10,12 +10,16 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import no.ntnu.pawanchamling.vrldatacollection.R;
 import no.ntnu.pawanchamling.vrldatacollection.model.Settings;
 
 public class SettingActivity extends ActionBarActivity {
 
     private Settings settings;
+
+    private static final int REQUEST_CODE = 1; //get ordinal values from the OrdinalValuesActivity
 
     private Switch switchGPSSetting;
     private Switch switchNoiseDataSetting;
@@ -75,7 +79,7 @@ public class SettingActivity extends ActionBarActivity {
         bundle.putSerializable("settings", settings );
         ordinalValuesSettingIntent.putExtras(bundle);
 
-        startActivity(ordinalValuesSettingIntent);
+        startActivityForResult(ordinalValuesSettingIntent, REQUEST_CODE);
     }
 
 
@@ -99,5 +103,29 @@ public class SettingActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK  && requestCode == REQUEST_CODE) {
+            if (data.hasExtra("settings")) {
+                // Toast.makeText(this, data.getExtras().getString("myData1"),
+                //         Toast.LENGTH_SHORT).show();
+                this.settings = (Settings) data.getSerializableExtra("settings");
+               // String timeStamp = data.getExtras().getString("timeStamp");
+
+                // System.out.println("############################");
+                System.out.println("### The value received on the settings page " );
+
+                ArrayList<String> ordinalValues = settings.getOrdinalValues();
+                for(int i = 0; i < settings.getNoOfOridnalValues(); i++) {
+                    System.out.println("### " + ordinalValues.get(i));
+                }
+
+            }
+        }
     }
 }

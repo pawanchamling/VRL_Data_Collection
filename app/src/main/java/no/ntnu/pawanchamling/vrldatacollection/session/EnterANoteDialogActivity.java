@@ -79,11 +79,11 @@ public class EnterANoteDialogActivity extends ActionBarActivity implements NoteD
 
     @Override
     public void saveNote(String value) {
-        Intent data = new Intent();
-        data.putExtra("noteString", value);
-        data.putExtra("timeStamp", getFullTimeStamp());
+        Intent dataReturnIntent = new Intent();
+        dataReturnIntent.putExtra("noteString", value);
+        dataReturnIntent.putExtra("timeStamp", getFullTimeStamp());
         // Activity finished ok, return the data
-        setResult(RESULT_OK, data);
+        setResult(RESULT_OK, dataReturnIntent);
         finish();
 
        // EnterANoteDialogActivity.this.finish();

@@ -49,6 +49,7 @@
                             android:layout_height="wrap_content"
                             android:text="Add Ordinal Value"
                             android:id="@+id/button_addOrdinalValues"
+                            android:onClick="addOrdinalValue"
                             android:layout_column="0"
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true" />

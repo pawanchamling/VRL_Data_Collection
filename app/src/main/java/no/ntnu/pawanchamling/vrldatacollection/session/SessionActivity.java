@@ -17,7 +17,7 @@ import no.ntnu.pawanchamling.vrldatacollection.model.Settings;
 public class SessionActivity extends ActionBarActivity implements SessionView {
 
     private SessionPresenter presenter;
-    private static final int REQUEST_CODE = 1;
+    private static final int REQUEST_CODE = 1; //Get note from EnterANoteDialogActivity
     private TextView userActionsMessages;
     private ScrollView userNotes_scroller;
 
