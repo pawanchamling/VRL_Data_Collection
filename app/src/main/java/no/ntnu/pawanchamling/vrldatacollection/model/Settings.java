@@ -18,13 +18,13 @@ public class Settings implements Serializable{
     private int noOfOridnalValues;
     private ArrayList<String> ordinalValues;
 
-    public Settings(){
+    public Settings() {
         this.fileTimeStamp = "";
 
         this.isGPSsensorOn = true;
-        this.GPSdataScheduleTime = 5;
+        this.GPSdataScheduleTime = 15;
         this.isNoiseSensorOn = true;
-        this.noiseDataScheduleTime = 3;
+        this.noiseDataScheduleTime = 5;
         this.isOrdinalDataOn = true;
         ordinalValues = new ArrayList<String>();
 
@@ -34,21 +34,14 @@ public class Settings implements Serializable{
         ordinalValues.add("Low");
 
 
-        this.isGPSsensorOn = false;
-        this.GPSdataScheduleTime = 5;
-        this.isNoiseSensorOn = false;
-        this.noiseDataScheduleTime = 3;
-        this.isOrdinalDataOn = true;
-        ordinalValues = new ArrayList<String>();
 
-
-        ordinalValues.add("High hello how are you?");
-        ordinalValues.add("Medium");
-        ordinalValues.add("Low");
-        ordinalValues.add("lower");
-        ordinalValues.add("Lowest");
-        ordinalValues.add("much lower");
-        ordinalValues.add("such lowest wow incredible");
+//        ordinalValues.add("High");
+//        ordinalValues.add("Medium");
+//        ordinalValues.add("Low");
+//        ordinalValues.add("lower");
+//        ordinalValues.add("Lowest");
+//        ordinalValues.add("much lower");
+//        ordinalValues.add("such lowest wow incredible");
 
 
         this.noOfOridnalValues = ordinalValues.size();
