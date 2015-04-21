@@ -164,7 +164,7 @@ public class SoundRecordService extends Service {
             directory.mkdirs();
 
             //Now create the file in the above directory and write the contents into it
-            File file = new File(directory, settings.getFileTimeStamp() +"_Noise_data.txt");
+            File file = new File(directory, settings.getFileTimeStamp() +"_Noise_data.json");
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             OutputStreamWriter outputWriter = new OutputStreamWriter(fileOutputStream);
 
@@ -216,7 +216,7 @@ public class SoundRecordService extends Service {
 
                         Log.i("!!!SoundRecordService", "[" + ++index + "] :" + getFullTimeStamp() + " Amp: " + amp);
 
-                        timeStampData.add(getFullTimeStamp());
+                        timeStampData.add(String.valueOf(new Date().getTime()));//getFullTimeStamp());
                         sensorData.add(new Double(amp));
                     }
 

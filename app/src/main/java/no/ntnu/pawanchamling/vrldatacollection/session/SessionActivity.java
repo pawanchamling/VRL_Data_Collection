@@ -118,7 +118,8 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
             public void onClick(View v) {
 
                   // v.getT
-                presenter.addOrdinalData(getFullTimeStamp(), text);
+                //presenter.addOrdinalData(getFullTimeStamp(), text);//
+                presenter.addOrdinalData( String.valueOf(new Date().getTime()), text);
                 presenter.appendMessagePanel("[Ordinal] " + text);
 
                 Log.i("###OrdinalValuesActivity", "Ordinal Button with text : " + text);
@@ -184,16 +185,17 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK  && requestCode == REQUEST_CODE) {
-            if (data.hasExtra("noteString") && data.hasExtra("timeStamp")) {
+            if (data.hasExtra("noteString") && data.hasExtra("timeStamp") && data.hasExtra("javaTimeStamp")) {
                // Toast.makeText(this, data.getExtras().getString("myData1"),
                //         Toast.LENGTH_SHORT).show();
                 String noteString = data.getExtras().getString("noteString");
                 String timeStamp = data.getExtras().getString("timeStamp");
+                String javaTimeStamp = data.getExtras().getString("javaTimeStamp");
 
                // System.out.println("############################");
-                Log.i("###SessionActivity", "The value received = " + timeStamp + ": "+ noteString);
+                Log.i("###SessionActivity", "The value received = " + timeStamp + ": " + javaTimeStamp +" : " + noteString);
 
-                presenter.addNominalNote(timeStamp, noteString);
+                presenter.addNominalNote(javaTimeStamp, noteString);
                 presenter.appendMessagePanel(noteString);
             }
         }

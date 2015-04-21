@@ -158,7 +158,7 @@ public class GPSRecordService extends Service {
             directory.mkdirs();
 
             //Now create the file in the above directory and write the contents into it
-            File file = new File(directory, settings.getFileTimeStamp() +"_GPS_data.txt");
+            File file = new File(directory, settings.getFileTimeStamp() +"_GPS_data.json");
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             OutputStreamWriter outputWriter = new OutputStreamWriter(fileOutputStream);
 
@@ -199,7 +199,7 @@ public class GPSRecordService extends Service {
                             Log.i("!!!GPSRecordService", "Latitude:- " + GPSListener.latitude + '\n');
                             Log.i("!!!GPSRecordService", "Longitude:- " + GPSListener.longitude + '\n');
 
-                            timeStampData.add(getFullTimeStamp());
+                            timeStampData.add(String.valueOf(new Date().getTime()));//getFullTimeStamp());
                             latitudeData.add(new Double(GPSListener.latitude));
                             longitudeData.add(new Double(GPSListener.longitude));
 

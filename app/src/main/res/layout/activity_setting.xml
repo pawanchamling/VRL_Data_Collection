@@ -88,12 +88,13 @@
                     android:layout_below="@+id/switch1"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_weight="0.7"  />
+                    android:layout_weight="0.5"  />
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
                     android:weightSum="1">
 
                     <EditText
@@ -169,7 +170,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
                     android:weightSum="1">
                     <EditText
                         android:layout_width="wrap_content"

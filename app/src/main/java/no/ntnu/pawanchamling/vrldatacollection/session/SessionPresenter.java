@@ -100,7 +100,7 @@ public class SessionPresenter {
             directory.mkdirs();
 
             //Now create the file in the above directory and write the contents into it
-            File file = new File(directory, theMainTimeStamp +"_Nominal_data.txt");
+            File file = new File(directory, theMainTimeStamp +"_Nominal_data.json");
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             OutputStreamWriter outputWriter = new OutputStreamWriter(fileOutputStream);
 
@@ -187,7 +187,7 @@ public class SessionPresenter {
             directory.mkdirs();
 
             //Now create the file in the above directory and write the contents into it
-            File file = new File(directory, theMainTimeStamp +"_Ordinal_data.txt");
+            File file = new File(directory, theMainTimeStamp +"_Ordinal_data.json");
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             OutputStreamWriter outputWriter = new OutputStreamWriter(fileOutputStream);
 

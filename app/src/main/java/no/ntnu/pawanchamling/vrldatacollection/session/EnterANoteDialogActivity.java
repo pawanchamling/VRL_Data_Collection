@@ -89,6 +89,7 @@ public class EnterANoteDialogActivity extends ActionBarActivity implements NoteD
         Intent dataReturnIntent = new Intent();
         dataReturnIntent.putExtra("noteString", value);
         dataReturnIntent.putExtra("timeStamp", getFullTimeStamp());
+        dataReturnIntent.putExtra("javaTimeStamp", String.valueOf(new Date().getTime()));
         // Activity finished ok, return the data
         setResult(RESULT_OK, dataReturnIntent);
 
