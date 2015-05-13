@@ -82,33 +82,35 @@ public class TemperatureListener implements SensorEventListener {
     @Override
     public final void onSensorChanged(SensorEvent event) {
         //retrieve sensor information
-        sensorValue = event.values[0];
-      //  TextView currValue = ambientTemperatureValue;
-        String envInfo="";
 
-        //check type
-        int currType=event.sensor.getType();
-        switch(currType){
-            case Sensor.TYPE_AMBIENT_TEMPERATURE:
-                envInfo= sensorValue + " degrees Celsius";
-               // currValue=valueFields[AMBIENT];
-                break;
-            default: break;
-        }
-        //output and reset
-        //currValue.setText(envInfo);
+        Log.i("###TemperatureListener", "ambient temperature changed! = " + event.values[0]);
+        sensorValue = event.values[0];
+
         envSense = null;
         senseManage.unregisterListener(this);
     }
 
 
     public float getSensorValue() {
+        envSense = senseManage.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+        if(envSense==null){
+            Log.i("###TemperatureListener", "Sorry - your device doesn't have an " +
+                    "ambient temperature sensor!");
+        }
+        else {
+            senseManage.registerListener(this, envSense, SensorManager.SENSOR_DELAY_NORMAL);
+
+        }
+
         return sensorValue;
+
     }
 
     //@Override
     public void stop() {
        // super.onPause();
+
+        envSense = null;
         senseManage.unregisterListener(this);
         //senseManage.cancelTriggerSensor()
     }
