@@ -193,6 +193,82 @@
                 </LinearLayout>
             </TableRow>
 
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:weightSum="1.0">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Temperature Data Collection"
+                    android:id="@+id/textView_temperatureSensor_setting"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="0.7" />
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/switch_temperatureSensor_setting"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:checked="true"
+                    android:layout_weight="0.3"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:weightSum="1.0" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Temperature data collection interval"
+                    android:id="@+id/textView_temperatureSensor_interval"
+                    android:layout_below="@+id/switch1"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="0.7"  />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:weightSum="1">
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editText_temperatureSensor_interval"
+                        android:layout_alignBottom="@+id/textView2"
+                        android:layout_alignRight="@+id/switch1"
+                        android:layout_alignEnd="@+id/switch1"
+                        android:inputType="number"
+                        android:layout_weight="0.7" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="seconds"
+                        android:id="@+id/textView_seconds2"
+                        android:layout_weight="0.3" />
+
+                </LinearLayout>
+            </TableRow>
+
+
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"

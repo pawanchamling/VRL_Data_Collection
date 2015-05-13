@@ -36,6 +36,7 @@ public class GPSRecordService extends Service {
     // timer handling
     private Timer mTimer = null;
 
+    private long scheduledTime = 5;
    // private String theMainTimeStamp = "";
 
     private ArrayList<String> timeStampData;
@@ -64,7 +65,7 @@ public class GPSRecordService extends Service {
         Bundle id = intent.getExtras();
         settings = (Settings)id.getSerializable("settings");
         //this.theMainTimeStamp = id.getString("timestamp");
-
+        scheduledTime = settings.getGPSdataScheduleTime();
 
         Log.i("!!!GPSRecordService", "Serializable object received");
         Log.i("!!!GPSRecordService", "no. of ordinal values = " + settings.getNoOfOridnalValues());
@@ -100,7 +101,7 @@ public class GPSRecordService extends Service {
         }
 
         // schedule task
-        mTimer.scheduleAtFixedRate(new ScheduledTimerTask(), 0, NOTIFY_INTERVAL);
+        mTimer.scheduleAtFixedRate(new ScheduledTimerTask(), 0, scheduledTime * 1000);
 
 
 
@@ -190,7 +191,7 @@ public class GPSRecordService extends Service {
                     // display toast
                     //Toast.makeText(getApplicationContext(), getDateTime(), Toast.LENGTH_SHORT).show();
 
-                    Log.i("!!!GPSRecordService", "5 Seconds gone");
+                    Log.i("!!!GPSRecordService", scheduledTime + " Seconds gone");
 
                     mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mGPSListener);
 

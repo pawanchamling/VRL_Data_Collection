@@ -40,6 +40,9 @@
         <service
             android:name=".session.service.GPSRecordService"
             android:exported="false" />
+        <service
+            android:name=".session.service.TemperatureRecordService"
+            android:exported="false" />
 
         <activity
             android:name=".AppSettings.SettingActivity"

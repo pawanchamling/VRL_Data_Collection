@@ -14,6 +14,9 @@ public class Settings implements Serializable{
     private int GPSdataScheduleTime;
     private boolean isNoiseSensorOn;
     private int noiseDataScheduleTime;
+    private boolean isTemperatureSensorOn;
+
+    private int temperatureDataScheduleTime;
     private boolean isOrdinalDataOn;
     private int noOfOridnalValues;
     private ArrayList<String> ordinalValues;
@@ -25,6 +28,8 @@ public class Settings implements Serializable{
         this.GPSdataScheduleTime = 15;
         this.isNoiseSensorOn = true;
         this.noiseDataScheduleTime = 5;
+        this.isTemperatureSensorOn = true;
+        this.temperatureDataScheduleTime = 5;
         this.isOrdinalDataOn = true;
         ordinalValues = new ArrayList<String>();
 
@@ -86,6 +91,23 @@ public class Settings implements Serializable{
 
     public void setNoiseDataScheduleTime(int noiseDataScheduleTime) {
         this.noiseDataScheduleTime = noiseDataScheduleTime;
+    }
+
+
+    public boolean isTemperatureSensorOn() {
+        return isTemperatureSensorOn;
+    }
+
+    public void setTemperatureSensorOn(boolean isTemperatureSensorOn) {
+        this.isTemperatureSensorOn = isTemperatureSensorOn;
+    }
+
+    public int getTemperatureDataScheduleTime() {
+        return temperatureDataScheduleTime;
+    }
+
+    public void setTemperatureDataScheduleTime(int temperatureDataScheduleTime) {
+        this.temperatureDataScheduleTime = temperatureDataScheduleTime;
     }
 
     public boolean isOrdinalDataOn() {

@@ -18,6 +18,7 @@ import no.ntnu.pawanchamling.vrldatacollection.model.Settings;
 import no.ntnu.pawanchamling.vrldatacollection.session.SessionActivity;
 import no.ntnu.pawanchamling.vrldatacollection.session.service.GPSRecordService;
 import no.ntnu.pawanchamling.vrldatacollection.session.service.SoundRecordService;
+import no.ntnu.pawanchamling.vrldatacollection.session.service.TemperatureRecordService;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -116,7 +117,21 @@ public class MainActivity extends ActionBarActivity {
 
         System.out.println("### Starting services");
         isSessionActive = true;
+
         // startService(serviceIntent);
+        //### Temperature Record Service
+        if(settings.isTemperatureSensorOn()) {
+            Intent temperatureServiceIntent = new Intent(this, TemperatureRecordService.class);
+            temperatureServiceIntent.putExtra("timestamp", fileNameTimeStamp);
+            Bundle temperatureServiceBundle = new Bundle();
+            temperatureServiceBundle.putSerializable("settings", settings);
+            temperatureServiceIntent.putExtras(temperatureServiceBundle);
+            startService(temperatureServiceIntent);
+        }
+        else {
+            Log.i("###MainActivity", "Temperature Data is off so service not started");
+        }
+
 
         //### Sound Record Service
         if(settings.isNoiseSensorOn()) {
@@ -147,6 +162,8 @@ public class MainActivity extends ActionBarActivity {
         }
 
 
+
+
     }
 
     //#####################################################
@@ -162,6 +179,9 @@ public class MainActivity extends ActionBarActivity {
         Intent gpsServiceIntent =   new Intent(this, GPSRecordService.class );
         stopService(gpsServiceIntent);
 
+        //##@ Stopping Temperature Record Service
+        Intent temperatureServiceIntent =   new Intent(this, TemperatureRecordService.class );
+        stopService(temperatureServiceIntent);
 
     }
 

@@ -24,10 +24,12 @@ public class SettingActivity extends ActionBarActivity {
 
     private Switch switchGPSSetting;
     private Switch switchNoiseDataSetting;
+    private Switch switchTemperatureDataSetting;
     private Switch switchOrdinalDataSetting;
 
     private EditText editTextGPSInterval;
     private EditText editTextNoiseDataInterval;
+    private EditText editTextTemperatureDataInterval;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +41,22 @@ public class SettingActivity extends ActionBarActivity {
 
         switchGPSSetting = (Switch) findViewById(R.id.switch_gpsSetting);
         switchNoiseDataSetting = (Switch) findViewById(R.id.switch_noiseSensor_setting);
+        switchTemperatureDataSetting = (Switch) findViewById(R.id.switch_temperatureSensor_setting);
         switchOrdinalDataSetting = (Switch) findViewById(R.id.switch_ordinalData_setting);
 
         editTextGPSInterval = (EditText) findViewById(R.id.editText_gps_interval);
         editTextNoiseDataInterval = (EditText) findViewById(R.id.editText_noiseSensor_interval);
+        editTextTemperatureDataInterval = (EditText) findViewById(R.id.editText_temperatureSensor_interval);
 
         //###Set the setting components based on the 'settings'
         switchGPSSetting.setChecked(settings.isGPSsensorOn());
         switchNoiseDataSetting.setChecked(settings.isNoiseSensorOn());
+        switchTemperatureDataSetting.setChecked(settings.isTemperatureSensorOn());
         switchOrdinalDataSetting.setChecked(settings.isOrdinalDataOn());
 
         editTextGPSInterval.setText("" + settings.getGPSdataScheduleTime(), TextView.BufferType.EDITABLE);
         editTextNoiseDataInterval.setText("" + settings.getNoiseDataScheduleTime(), TextView.BufferType.EDITABLE);
+        editTextTemperatureDataInterval.setText("" + settings.getTemperatureDataScheduleTime(), TextView.BufferType.EDITABLE);
 
 
     }
@@ -67,10 +73,12 @@ public class SettingActivity extends ActionBarActivity {
 
         settings.setGPSsensorOn(switchGPSSetting.isChecked());
         settings.setNoiseSensorOn(switchNoiseDataSetting.isChecked());
+        settings.setTemperatureSensorOn(switchTemperatureDataSetting.isChecked());
         settings.setOrdinalDataOn(switchOrdinalDataSetting.isChecked());
 
         settings.setGPSdataScheduleTime(Integer.parseInt(editTextGPSInterval.getText().toString()));
         settings.setNoiseDataScheduleTime(Integer.parseInt(editTextNoiseDataInterval.getText().toString()));
+        settings.setTemperatureDataScheduleTime(Integer.parseInt(editTextTemperatureDataInterval.getText().toString()));
 
 
         Intent dataReturnIntent = new Intent();
