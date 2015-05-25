@@ -61,9 +61,27 @@ public class SoundMeter {
 
     }
 
+    public double getAmplitude2() {
+
+        start();
+
+        if (mRecorder != null) {
+            double amp = mRecorder.getMaxAmplitude() / 2700.0;
+            Log.i("@@@SoundMeter", "amp = " + amp);
+            stop();
+            return (amp);
+        }
+        else {
+            return 0;
+        }
+
+
+    }
+
     public double getAmplitudeEMA() {
         double amp = getAmplitude();
         mEMA = EMA_FILTER * amp + (1.0 - EMA_FILTER) * mEMA;
         return mEMA;
     }
 }
+

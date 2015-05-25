@@ -66,6 +66,11 @@ public class GPSRecordService extends Service {
         settings = (Settings)id.getSerializable("settings");
         //this.theMainTimeStamp = id.getString("timestamp");
         scheduledTime = settings.getGPSdataScheduleTime();
+        Log.i("!!!GPSRecordService", "scheduledTime = " + scheduledTime);
+
+        // schedule task
+        mTimer.scheduleAtFixedRate(new ScheduledTimerTask(), 0, scheduledTime * 1000);
+
 
         Log.i("!!!GPSRecordService", "Serializable object received");
         Log.i("!!!GPSRecordService", "no. of ordinal values = " + settings.getNoOfOridnalValues());
@@ -100,8 +105,6 @@ public class GPSRecordService extends Service {
 
         }
 
-        // schedule task
-        mTimer.scheduleAtFixedRate(new ScheduledTimerTask(), 0, scheduledTime * 1000);
 
 
 

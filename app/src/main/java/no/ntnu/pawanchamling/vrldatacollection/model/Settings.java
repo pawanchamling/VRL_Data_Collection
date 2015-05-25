@@ -25,11 +25,11 @@ public class Settings implements Serializable{
         this.fileTimeStamp = "";
 
         this.isGPSsensorOn = true;
-        this.GPSdataScheduleTime = 15;
+        this.GPSdataScheduleTime = 300;
         this.isNoiseSensorOn = true;
-        this.noiseDataScheduleTime = 5;
+        this.noiseDataScheduleTime = 120;
         this.isTemperatureSensorOn = true;
-        this.temperatureDataScheduleTime = 5;
+        this.temperatureDataScheduleTime = 120;
         this.isOrdinalDataOn = true;
         ordinalValues = new ArrayList<String>();
 

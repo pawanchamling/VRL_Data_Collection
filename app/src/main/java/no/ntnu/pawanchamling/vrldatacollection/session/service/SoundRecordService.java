@@ -34,6 +34,8 @@ public class SoundRecordService extends Service {
     private Handler mHandler = new Handler();
     // timer handling
     private Timer mTimer = null;
+    private Timer mTimerStart = null;
+    private Timer mTimerStop = null;
 
    // private String theMainTimeStamp = "";
 
@@ -49,6 +51,7 @@ public class SoundRecordService extends Service {
 
 
     private long scheduledTime = 5;
+    private long scheduledSoundRecordStartTime = 5;
 
     private LocationManager mLocationManager = null;
     private GPSListener mGPSListener;
@@ -71,6 +74,13 @@ public class SoundRecordService extends Service {
        // this.theMainTimeStamp = id.getString("timestamp");
 
         scheduledTime = settings.getNoiseDataScheduleTime();
+        scheduledSoundRecordStartTime = settings.getNoiseDataScheduleTime();
+        Log.i("!!!SoundRecordService", "scheduledTime = " + scheduledTime);
+        //### schedule task
+        mTimer.scheduleAtFixedRate(new ScheduledTimerTask(), 10000, scheduledTime * 1000);
+        //mTimerStart.scheduleAtFixedRate(new StartSoundMeterTask(), 0, scheduledSoundRecordStartTime * 1000);
+        //mTimerStop.scheduleAtFixedRate(new StopSoundMeterTask(), 20000, scheduledSoundRecordStartTime * 1000);
+
         Log.i("!!!SoundRecordService", "Serializable object received");
         Log.i("!!!SoundRecordService", "no. of ordinal values = " + settings.getNoOfOridnalValues());
        // Log.i("!!!SoundRecordService", "Inside the onStartCommand ");
@@ -93,6 +103,8 @@ public class SoundRecordService extends Service {
 
             // recreate new Timer
             mTimer = new Timer();
+            mTimerStart = new Timer();
+            mTimerStop = new Timer();
 
             //
             sensorData = new ArrayList<Double>();
@@ -102,8 +114,6 @@ public class SoundRecordService extends Service {
             mSoundSensor.start();
         }
 
-        //### schedule task
-        mTimer.scheduleAtFixedRate(new ScheduledTimerTask(), 0, scheduledTime * 1000);
 
 
 
@@ -187,6 +197,37 @@ public class SoundRecordService extends Service {
 
     }
 
+    class StartSoundMeterTask extends TimerTask {
+
+        @Override
+        public void run() {
+            // run on another thread
+            mHandler.post(new Runnable() {
+
+                @Override
+                public void run() {
+                    mSoundSensor.start();
+                }
+            });
+
+        }
+    }
+
+    class StopSoundMeterTask extends TimerTask {
+
+        @Override
+        public void run() {
+            // run on another thread
+            mHandler.post(new Runnable() {
+
+                @Override
+                public void run() {
+                    mSoundSensor.stop();
+                }
+            });
+
+        }
+    }
     class ScheduledTimerTask extends TimerTask {
 
         @Override
@@ -201,7 +242,10 @@ public class SoundRecordService extends Service {
                    // Toast.makeText(getApplicationContext(), getDateTime(), Toast.LENGTH_SHORT).show();
 
                     Log.i("!!!SoundRecordService", scheduledTime + " Seconds gone");
+                    //Start sound recording
+                   // mSoundSensor.start();
                     double amp = mSoundSensor.getAmplitude();
+                   // mSoundSensor.stop();  //stopping the SoundMeter
 
                     if(index == 0 && amp == 0) {
                         Log.i("!!!SoundRecordService", "index = 0 and amp = 0");
@@ -224,7 +268,7 @@ public class SoundRecordService extends Service {
                         sensorData.add(new Double(amp));
                     }
 
-
+                   // mSoundSensor.stop();  //stopping the SoundMeter
                 }
 
             });

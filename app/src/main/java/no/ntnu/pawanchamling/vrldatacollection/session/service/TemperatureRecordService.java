@@ -84,6 +84,11 @@ public class TemperatureRecordService extends Service {
 
 
         scheduledTime = settings.getTemperatureDataScheduleTime();
+        Log.i("!!!TemperatureRecordService", "scheduledTime = " + scheduledTime);
+        //### schedule task
+        mTimer.scheduleAtFixedRate(new ScheduledTimerTask(), 0, scheduledTime * 1000);
+
+
         tempListener = new TemperatureListener();
 
         isSensorPresent = tempListener.start(this);
@@ -121,8 +126,6 @@ public class TemperatureRecordService extends Service {
 
         }
 
-        //### schedule task
-        mTimer.scheduleAtFixedRate(new ScheduledTimerTask(), 0, scheduledTime * 1000);
 
 
 
