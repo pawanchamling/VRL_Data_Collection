@@ -25,18 +25,18 @@ public class Settings implements Serializable{
         this.fileTimeStamp = "";
 
         this.isGPSsensorOn = true;
-        this.GPSdataScheduleTime = 300;
+        this.GPSdataScheduleTime = 600;
         this.isNoiseSensorOn = true;
-        this.noiseDataScheduleTime = 120;
+        this.noiseDataScheduleTime = 300;
         this.isTemperatureSensorOn = true;
-        this.temperatureDataScheduleTime = 120;
+        this.temperatureDataScheduleTime = 300;
         this.isOrdinalDataOn = true;
         ordinalValues = new ArrayList<String>();
 
 
-        ordinalValues.add("High");
-        ordinalValues.add("Medium");
-        ordinalValues.add("Low");
+        ordinalValues.add("High Productive");
+        ordinalValues.add("Medium Productive");
+        ordinalValues.add("Not Productive");
 
 
 
