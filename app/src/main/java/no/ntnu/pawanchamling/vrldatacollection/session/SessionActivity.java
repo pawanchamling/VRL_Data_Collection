@@ -1,6 +1,8 @@
 package no.ntnu.pawanchamling.vrldatacollection.session;
 
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -109,8 +112,24 @@ public class SessionActivity extends ActionBarActivity implements SessionView {
 //                120, 50);
 //        ordinalValueButton.setLayoutParams(lp);
 
-        ordinalValueButton.setWidth(450);
-        ordinalValueButton.setHeight(100);
+        Paint mPaint = new Paint();/*
+        mPaint.setAntiAlias(true);
+        mPaint.setStrokeWidth(5);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
+        mPaint.setTextSize(64);
+        mPaint.setTypeface(Typeface.create(Typeface.SERIF, Typeface.ITALIC));
+        */
+// ...
+        float w = mPaint.measureText(name, 0, name.length());
+
+        Log.i("###OrdinalValuesActivity", "Text " + name + " covers " + w + "px");
+
+        ordinalValueButton.setWidth(600);
+        ordinalValueButton.setHeight(250);
+        //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(FlowLayout.LayoutParams.WRAP_CONTENT,
+        //        FlowLayout.LayoutParams.WRAP_CONTENT);
+       // ordinalValueButton.setLayoutParams(params);
+
 
         ordinalValueButton.setOnClickListener(new View.OnClickListener() {
 

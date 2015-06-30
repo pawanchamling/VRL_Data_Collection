@@ -35,7 +35,7 @@ public class Settings implements Serializable{
 
 
         ordinalValues.add("High Productive");
-        ordinalValues.add("Medium Productive");
+        ordinalValues.add("Productive");
         ordinalValues.add("Not Productive");
 
 

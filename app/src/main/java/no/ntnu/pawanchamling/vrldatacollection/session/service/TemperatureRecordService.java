@@ -82,12 +82,7 @@ public class TemperatureRecordService extends Service {
         //Toast.makeText(this, "!!! Service Started " + value, Toast.LENGTH_LONG).show();
         // If we get killed, after returning from here, restart
 
-
         scheduledTime = settings.getTemperatureDataScheduleTime();
-        Log.i("!!!TemperatureRecordService", "scheduledTime = " + scheduledTime);
-        //### schedule task
-        mTimer.scheduleAtFixedRate(new ScheduledTimerTask(), 0, scheduledTime * 1000);
-
 
         tempListener = new TemperatureListener();
 
@@ -96,6 +91,15 @@ public class TemperatureRecordService extends Service {
         if(!isSensorPresent) {
             Log.i("!!!TemperatureRecordService", "Ambient Temperature Sensor not found");
         }
+        else {
+
+
+            Log.i("!!!TemperatureRecordService", "scheduledTime = " + scheduledTime);
+            //### schedule task
+            mTimer.scheduleAtFixedRate(new ScheduledTimerTask(), 0, scheduledTime * 1000);
+
+        }
+
        // mSensorManager =(SensorManager) getSystemService(Context.SENSOR_SERVICE);
        // tempSense = mSensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
 
@@ -136,12 +140,13 @@ public class TemperatureRecordService extends Service {
 
         Log.i("!!!TemperatureRecordService", "Service about to get destroyed");
         //mSoundSensor.stop();  //stopping the SoundMeter
+        if(isSensorPresent) {
+            mTimer.cancel(); //Stopping the scheduled task
 
-        mTimer.cancel(); //Stopping the scheduled task
+            tempListener.stop();
 
-        tempListener.stop();
-
-        saveDataToTheFile(); //Save the data to the file
+            saveDataToTheFile(); //Save the data to the file
+        }
 
         super.onDestroy();
     }
@@ -150,64 +155,65 @@ public class TemperatureRecordService extends Service {
     private void saveDataToTheFile() {
         Log.i("!!!TemperatureRecordService", "Saving data to the file");
 
-        double max = 0, min = sensorData.get(0);
+        if(sensorData.size() != 0) {
+            double max = 0, min = sensorData.get(0);
 
-        String jsonData = "";
+            String jsonData = "";
 
-        for(int i = 0; i < sensorData.size(); i++){
-            jsonData += "{\"timestamp\":\"" + timeStampData.get(i) + "\",";
-            jsonData += "\"value\":\"" + new Double(sensorData.get(i)).toString() + "\"}";
+            for (int i = 0; i < sensorData.size(); i++) {
+                jsonData += "{\"timestamp\":\"" + timeStampData.get(i) + "\",";
+                jsonData += "\"value\":\"" + new Double(sensorData.get(i)).toString() + "\"}";
 
-            //if not the last value
-            if(i != sensorData.size() - 1){
-                jsonData += ",";
+                //if not the last value
+                if (i != sensorData.size() - 1) {
+                    jsonData += ",";
+                }
+
+                if (sensorData.get(i) > max) {
+                    max = sensorData.get(i);
+                }
+                if (sensorData.get(i) < min) {
+                    min = sensorData.get(i);
+                }
+
             }
+            jsonData += "]}";
 
-            if(sensorData.get(i) > max){
-                max = sensorData.get(i);
-            }
-            if(sensorData.get(i) < min){
-                min = sensorData.get(i);
-            }
+            String jsonHeaderString = "{\"name\":\"Temperature Data\", \"Source\":\"Android Mobile\",\"type\":\"2\",";
+            jsonHeaderString += "\"valueInfo\":{\"max\":\"" + new Double(max).toString() + "\",";
+            jsonHeaderString += "\"min\":\"" + new Double(min).toString() + "\",";
+            jsonHeaderString += "\"unit\":\"Celsius\",";
+            jsonHeaderString += "\"threshold\":\"" + new Integer(mSoundThreshold).toString() + "\"},";
+            jsonHeaderString += "\"values\":[";
 
+            Log.i("!!!TemperatureRecordService", "Max: " + max + " & Min: " + min);
+
+            jsonData = jsonHeaderString + jsonData;
+
+            // add-write text into file
+            try {
+                //This will get the SD Card directory and create a folder named MyFiles in it.
+                File sdCard = Environment.getExternalStorageDirectory();
+                File directory = new File(sdCard.getAbsolutePath() + "/VRL_Data");
+                directory.mkdirs();
+
+                //Now create the file in the above directory and write the contents into it
+                File file = new File(directory, settings.getFileTimeStamp() + "_Temperature_data.json");
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                OutputStreamWriter outputWriter = new OutputStreamWriter(fileOutputStream);
+
+                outputWriter.write(jsonData);
+                outputWriter.flush();
+                outputWriter.close();
+
+                //display file saved message
+                Toast.makeText(getBaseContext(), "Data files saved successfully!", Toast.LENGTH_SHORT).show();
+                Log.i("!!!TemperatureRecordService", "Data Saved Successfully");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        jsonData += "]}";
-
-        String jsonHeaderString = "{\"name\":\"Temperature Data\", \"Source\":\"Android Mobile\",\"type\":\"2\",";
-        jsonHeaderString += "\"valueInfo\":{\"max\":\"" + new Double(max).toString() + "\",";
-        jsonHeaderString += "\"min\":\"" + new Double(min).toString() + "\",";
-        jsonHeaderString += "\"unit\":\"Celcius\",";
-        jsonHeaderString += "\"threshold\":\"" + new Integer(mSoundThreshold).toString() + "\"},";
-        jsonHeaderString += "\"values\":[";
-
-        Log.i("!!!TemperatureRecordService", "Max: " + max + " & Min: " + min );
-
-        jsonData = jsonHeaderString + jsonData;
-
-        // add-write text into file
-        try {
-            //This will get the SD Card directory and create a folder named MyFiles in it.
-            File sdCard = Environment.getExternalStorageDirectory();
-            File directory = new File (sdCard.getAbsolutePath() + "/VRL_Data");
-            directory.mkdirs();
-
-            //Now create the file in the above directory and write the contents into it
-            File file = new File(directory, settings.getFileTimeStamp() +"_Temperature_data.json");
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            OutputStreamWriter outputWriter = new OutputStreamWriter(fileOutputStream);
-
-            outputWriter.write(jsonData);
-            outputWriter.flush();
-            outputWriter.close();
-
-            //display file saved message
-            Toast.makeText(getBaseContext(), "Data files saved successfully!", Toast.LENGTH_SHORT).show();
-            Log.i("!!!TemperatureRecordService", "Data Saved Successfully");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
 
     }
 

@@ -128,56 +128,56 @@ public class GPSRecordService extends Service {
         Log.i("!!!GPSRecordService", "Saving data to the file");
 
         //double max = 0, min = timeStampData.get(0);
+        if(timeStampData.size() != 0) {
+            String jsonData = "";
 
-        String jsonData = "";
+            for (int i = 0; i < timeStampData.size(); i++) {
+                jsonData += "{\"timestamp\":\"" + timeStampData.get(i) + "\",";
+                jsonData += "\"latitude\":\"" + new Double(latitudeData.get(i)).toString() + "\",";
+                jsonData += "\"longitude\":\"" + new Double(longitudeData.get(i)).toString() + "\"}";
 
-        for(int i = 0; i < timeStampData.size(); i++){
-            jsonData += "{\"timestamp\":\"" + timeStampData.get(i) + "\",";
-            jsonData += "\"latitude\":\"" + new Double(latitudeData.get(i)).toString() + "\",";
-            jsonData += "\"longitude\":\"" + new Double(longitudeData.get(i)).toString() + "\"}";
+                //if not the last value
+                if (i != timeStampData.size() - 1) {
+                    jsonData += ",";
+                }
+            }
 
-            //if not the last value
-            if(i != timeStampData.size() - 1){
-                jsonData += ",";
+            jsonData += "]}";
+
+            String jsonHeaderString = "{\"name\":\"GPS Data\", \"Source\":\"Android Mobile\",\"type\":\"3\",";
+            jsonHeaderString += "\"valueInfo\":{},"; //\"max\":\"" + new Double(max).toString() + "\",";
+            //jsonHeaderString += "\"min\":\"" + new Double(min).toString() + "\",";
+            //jsonHeaderString += "\"threshold\":\"" + new Integer(mSoundThreshold).toString() + "\"},";
+            jsonHeaderString += "\"values\":[";
+
+            //Log.i("!!!GPSRecordService", "Max: " + max + " & Min: " + min );
+
+            jsonData = jsonHeaderString + jsonData;
+
+            // add-write text into file
+            try {
+                //This will get the SD Card directory and create a folder named MyFiles in it.
+                File sdCard = Environment.getExternalStorageDirectory();
+                File directory = new File(sdCard.getAbsolutePath() + "/VRL_Data");
+                directory.mkdirs();
+
+                //Now create the file in the above directory and write the contents into it
+                File file = new File(directory, settings.getFileTimeStamp() + "_GPS_data.json");
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                OutputStreamWriter outputWriter = new OutputStreamWriter(fileOutputStream);
+
+                outputWriter.write(jsonData);
+                outputWriter.flush();
+                outputWriter.close();
+
+                //display file saved message
+                Toast.makeText(getBaseContext(), "Data files saved successfully!", Toast.LENGTH_SHORT).show();
+                Log.i("!!!GPSRecordService", "Data Saved Successfully");
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-
-        jsonData += "]}";
-
-        String jsonHeaderString = "{\"name\":\"GPS Data\", \"Source\":\"Android Mobile\",\"type\":\"3\",";
-        jsonHeaderString += "\"valueInfo\":{},"; //\"max\":\"" + new Double(max).toString() + "\",";
-        //jsonHeaderString += "\"min\":\"" + new Double(min).toString() + "\",";
-        //jsonHeaderString += "\"threshold\":\"" + new Integer(mSoundThreshold).toString() + "\"},";
-        jsonHeaderString += "\"values\":[";
-
-        //Log.i("!!!GPSRecordService", "Max: " + max + " & Min: " + min );
-
-        jsonData = jsonHeaderString + jsonData;
-
-        // add-write text into file
-        try {
-            //This will get the SD Card directory and create a folder named MyFiles in it.
-            File sdCard = Environment.getExternalStorageDirectory();
-            File directory = new File (sdCard.getAbsolutePath() + "/VRL_Data");
-            directory.mkdirs();
-
-            //Now create the file in the above directory and write the contents into it
-            File file = new File(directory, settings.getFileTimeStamp() +"_GPS_data.json");
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            OutputStreamWriter outputWriter = new OutputStreamWriter(fileOutputStream);
-
-            outputWriter.write(jsonData);
-            outputWriter.flush();
-            outputWriter.close();
-
-            //display file saved message
-            Toast.makeText(getBaseContext(), "Data files saved successfully!", Toast.LENGTH_SHORT).show();
-            Log.i("!!!GPSRecordService", "Data Saved Successfully");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
 

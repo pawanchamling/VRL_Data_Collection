@@ -136,64 +136,67 @@ public class SoundRecordService extends Service {
     private void saveDataToTheFile(){
         Log.i("!!!SoundRecordService", "Saving data to the file");
 
-        double max = 0, min = sensorData.get(0);
+        if(sensorData.size() != 0){
 
-        String jsonData = "";
 
-        for(int i = 0; i < sensorData.size(); i++){
-            jsonData += "{\"timestamp\":\"" + timeStampData.get(i) + "\",";
-            jsonData += "\"value\":\"" + new Double(sensorData.get(i)).toString() + "\"}";
+            double max = 0, min = sensorData.get(0);
 
-            //if not the last value
-            if(i != sensorData.size() - 1){
-                jsonData += ",";
+            String jsonData = "";
+
+            for (int i = 0; i < sensorData.size(); i++) {
+                jsonData += "{\"timestamp\":\"" + timeStampData.get(i) + "\",";
+                jsonData += "\"value\":\"" + new Double(sensorData.get(i)).toString() + "\"}";
+
+                //if not the last value
+                if (i != sensorData.size() - 1) {
+                    jsonData += ",";
+                }
+
+                if (sensorData.get(i) > max) {
+                    max = sensorData.get(i);
+                }
+                if (sensorData.get(i) < min) {
+                    min = sensorData.get(i);
+                }
+
             }
+            jsonData += "]}";
 
-            if(sensorData.get(i) > max){
-                max = sensorData.get(i);
-            }
-            if(sensorData.get(i) < min){
-                min = sensorData.get(i);
-            }
+            String jsonHeaderString = "{\"name\":\"Noise Data\", \"Source\":\"Android Mobile\",\"type\":\"2\",";
+            jsonHeaderString += "\"valueInfo\":{\"max\":\"" + new Double(max).toString() + "\",";
+            jsonHeaderString += "\"min\":\"" + new Double(min).toString() + "\",";
+            jsonHeaderString += "\"unit\":\"Amp\",";
+            jsonHeaderString += "\"threshold\":\"" + new Integer(mSoundThreshold).toString() + "\"},";
+            jsonHeaderString += "\"values\":[";
 
+            Log.i("!!!SoundRecordService", "Max: " + max + " & Min: " + min);
+
+            jsonData = jsonHeaderString + jsonData;
+
+            // add-write text into file
+            try {
+                //This will get the SD Card directory and create a folder named MyFiles in it.
+                File sdCard = Environment.getExternalStorageDirectory();
+                File directory = new File(sdCard.getAbsolutePath() + "/VRL_Data");
+                directory.mkdirs();
+
+                //Now create the file in the above directory and write the contents into it
+                File file = new File(directory, settings.getFileTimeStamp() + "_Noise_data.json");
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                OutputStreamWriter outputWriter = new OutputStreamWriter(fileOutputStream);
+
+                outputWriter.write(jsonData);
+                outputWriter.flush();
+                outputWriter.close();
+
+                //display file saved message
+                Toast.makeText(getBaseContext(), "Data files saved successfully!", Toast.LENGTH_SHORT).show();
+                Log.i("!!!SoundRecordService", "Data Saved Successfully");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        jsonData += "]}";
-
-        String jsonHeaderString = "{\"name\":\"Noise Data\", \"Source\":\"Android Mobile\",\"type\":\"2\",";
-        jsonHeaderString += "\"valueInfo\":{\"max\":\"" + new Double(max).toString() + "\",";
-        jsonHeaderString += "\"min\":\"" + new Double(min).toString() + "\",";
-        jsonHeaderString += "\"unit\":\"Amp\",";
-        jsonHeaderString += "\"threshold\":\"" + new Integer(mSoundThreshold).toString() + "\"},";
-        jsonHeaderString += "\"values\":[";
-
-        Log.i("!!!SoundRecordService", "Max: " + max + " & Min: " + min );
-
-        jsonData = jsonHeaderString + jsonData;
-
-        // add-write text into file
-        try {
-            //This will get the SD Card directory and create a folder named MyFiles in it.
-            File sdCard = Environment.getExternalStorageDirectory();
-            File directory = new File (sdCard.getAbsolutePath() + "/VRL_Data");
-            directory.mkdirs();
-
-            //Now create the file in the above directory and write the contents into it
-            File file = new File(directory, settings.getFileTimeStamp() +"_Noise_data.json");
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            OutputStreamWriter outputWriter = new OutputStreamWriter(fileOutputStream);
-
-            outputWriter.write(jsonData);
-            outputWriter.flush();
-            outputWriter.close();
-
-            //display file saved message
-            Toast.makeText(getBaseContext(), "Data files saved successfully!", Toast.LENGTH_SHORT).show();
-            Log.i("!!!SoundRecordService", "Data Saved Successfully");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
 
     }
 
