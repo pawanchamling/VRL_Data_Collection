@@ -35,7 +35,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        settings = new Settings(); //retrieve settings from the DB or file later
+        settings = new Settings(); //TODO: retrieve settings from the DB or file later
 
 
     }
